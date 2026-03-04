@@ -277,12 +277,23 @@
   }
 
   @media (max-width: 900px) {
+    .hero-wrapper {
+      height: auto;
+    }
+    #hero {
+      position: relative;
+      min-height: auto;
+      display: block;
+      padding: 7rem 0 2rem;
+    }
     .hero-inner {
       grid-template-columns: 1fr;
+      gap: 2rem;
     }
     .hero-photo {
       position: static;
-      aspect-ratio: 4/3;
+      aspect-ratio: 4/5;
+      max-height: 500px;
     }
   }
 
@@ -474,6 +485,10 @@
     font-weight: 300;
     line-height: 1.85;
     color: var(--body-text);
+  }
+
+  .about-body + .about-body {
+    margin-top: 1.25rem;
   }
 
   /* ─── CONTACT ─── */
@@ -703,7 +718,8 @@
     <div class="about-grid">
       <h2 class="about-heading">About Me</h2>
       <div class="about-text">
-        <p class="about-body">Outside of work I'm a photographer and run a small print shop selling some of my images. I'm also a devoted listener of soul and R&amp;B, and I have a genuine passion for train and plane spotting.</p>
+        <p class="about-body">Outside of work I am a photographer with a particular interest in street, product, and portrait photography. I run a small print shop selling some of my images. I am also a devoted listener of soul and R&amp;B, and I have a genuine passion for train and plane spotting.</p>
+        <p class="about-body">What drives me, professionally and personally, is a curiosity about how things work and why people behave the way they do. That thread runs through most of what I do, whether I am trying to understand why users drop off at a particular point in a flow, or why a certain light hits a scene in just the right way.</p>
       </div>
     </div>
   </div>
@@ -716,7 +732,7 @@
     <h2 class="contact-heading">Get in touch</h2>
     <p class="contact-body">I am always happy to have a conversation, whether it is about a potential collaboration, a project, or just the profession.</p>
     <div class="contact-links">
-      <a class="contact-link" href="mailto:nicolai@nicolaijoshua.com">nicolai@nicolaijoshua.com</a>
+      <a class="contact-link" href="/cdn-cgi/l/email-protection#bad4d3d9d5d6dbd3fad4d3d9d5d6dbd3d0d5c9d2cfdb94d9d5d7"><span class="__cf_email__" data-cfemail="4927202a262528200927202a2625282023263a213c28672a2624">[email&#160;protected]</span></a>
       <a class="contact-link" href="https://www.linkedin.com/in/nicolaijoshua/" target="_blank">LinkedIn</a>
     </div>
   </div>
@@ -728,7 +744,7 @@
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   const toggle = document.getElementById('themeToggle');
   const icon = document.getElementById('toggleIcon');
 
