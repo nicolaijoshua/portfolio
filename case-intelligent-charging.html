@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intelligent Charging — Nicolai Joshua</title>
+<meta name="description" content="Case study: How Clever made it possible for EV drivers to charge at the cheapest and least CO₂-intensive times, automatically.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f0f2f5;
+    --white: #ffffff;
+    --black: #111111;
+    --gray-mid: #696969;
+    --gray-light: #696969;
+    --card-bg: #e8eaed;
+    --border: #cdd0d5;
+    --body-text: #444444;
+    --max: 1200px;
+  }
+
+  body.dark {
+    --bg: #141414;
+    --white: #141414;
+    --black: #f0f0f0;
+    --gray-mid: #999999;
+    --gray-light: #999999;
+    --card-bg: #1f1f1f;
+    --border: #333333;
+    --body-text: #aaaaaa;
+  }
+
+  body.dark nav {
+    background: rgba(20, 20, 20, 0.88);
+  }
+
+  /* ─── DARK MODE TOGGLE ─── */
+  .theme-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    width: 52px;
+    height: 28px;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    transition: background 0.2s, border-color 0.2s;
+    flex-shrink: 0;
+  }
+
+  .toggle-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), background 0.2s;
+    font-size: 11px;
+    line-height: 1;
+  }
+
+  body.dark .toggle-thumb {
+    transform: translateX(24px);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--black);
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(240, 242, 245, 0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .nav-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 2.5rem;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .nav-line {
+    width: 28px;
+    height: 1.5px;
+    background: var(--black);
+    flex-shrink: 0;
+  }
+
+  .nav-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--black);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+
+  .nav-title {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--gray-mid);
+    letter-spacing: -0.01em;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .nav-back {
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: var(--gray-mid);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .nav-back:hover { color: var(--black); }
+
+  /* ─── CONTAINER ─── */
+  .container {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 2.5rem;
+  }
+
+  /* ─── CASE HERO ─── */
+  #case-hero {
+    padding: 9rem 0 4rem;
+  }
+
+  .case-hero-inner {
+    max-width: 720px;
+  }
+
+  .case-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    font-weight: 400;
+    color: var(--gray-mid);
+    text-decoration: none;
+    margin-bottom: 2.5rem;
+    transition: color 0.15s;
+  }
+
+  .case-back:hover { color: var(--black); }
+
+  .case-meta {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
+  .case-tag {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.25rem 0.7rem;
+  }
+
+  .case-hero-title {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: var(--black);
+    margin-bottom: 1.5rem;
+  }
+
+  .case-hero-lead {
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--body-text);
+    max-width: 60ch;
+  }
+
+  /* ─── CASE IMAGE ─── */
+  .case-cover {
+    width: 100%;
+    aspect-ratio: 16/7;
+    object-fit: cover;
+    display: block;
+    background: var(--border);
+  }
+
+  .case-cover-placeholder {
+    width: 100%;
+    aspect-ratio: 16/7;
+    background: var(--card-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .case-cover-placeholder span {
+    font-size: 0.75rem;
+    color: var(--gray-mid);
+  }
+
+  /* ─── FACTS ─── */
+  #case-facts {
+    padding: 4rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .facts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 2rem;
+    max-width: 720px;
+  }
+
+  .fact-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .fact-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+  }
+
+  .fact-value {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--black);
+    line-height: 1.4;
+  }
+
+  /* ─── CASE CONTENT ─── */
+  #case-content {
+    padding: 4rem 0 7rem;
+  }
+
+  .case-content-inner {
+    max-width: 720px;
+  }
+
+  .case-section {
+    margin-bottom: 4rem;
+  }
+
+  .case-section-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+  }
+
+  .case-section p {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--body-text);
+    margin-bottom: 1.25rem;
+  }
+
+  .case-section p:last-child {
+    margin-bottom: 0;
+  }
+
+  .case-ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    margin-top: 0.5rem;
+  }
+
+  .case-ul li {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--body-text);
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .case-ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--gray-mid);
+    font-weight: 300;
+  }
+
+  /* Steps */
+  .case-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .case-step {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.25rem;
+    align-items: start;
+  }
+
+  .case-step-number {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--gray-mid);
+    background: var(--card-bg);
+    border-radius: 999px;
+    padding: 0.3rem 0.7rem;
+    white-space: nowrap;
+    margin-top: 0.15rem;
+  }
+
+  .case-step-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .case-step-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--black);
+  }
+
+  .case-step-text {
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--body-text);
+  }
+
+  /* Impact callout */
+  .case-impact {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 2rem 2.5rem;
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .impact-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .impact-value {
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: var(--black);
+  }
+
+  .impact-label {
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: var(--gray-mid);
+    max-width: 20ch;
+    line-height: 1.4;
+  }
+
+  .case-ul li strong {
+    font-weight: 500;
+    color: var(--black);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 1.5rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer span {
+    font-size: 0.78rem;
+    font-weight: 300;
+    color: var(--gray-mid);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 800px) {
+    .nav-title { display: none; }
+    .footer-inner { flex-direction: column; gap: 0.5rem; }
+    .case-impact { gap: 1.5rem; }
+    .case-cover {
+      aspect-ratio: 4/3;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .nav-right a:not(:last-child) { display: none; }
+    #case-hero { padding: 7rem 0 3rem; }
+    .case-cover {
+      aspect-ratio: 1/1;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-left">
+      <div class="nav-line"></div>
+      <a class="nav-name" href="index.html">Nicolai Joshua</a>
+      <span class="nav-title">Senior UX Designer</span>
+    </div>
+    <div class="nav-right">
+      <a class="nav-back" href="https://shop.nicolaijoshua.com" target="_blank">↗ Print Shop</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <span class="toggle-thumb" id="toggleIcon">☀️</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="case-hero">
+  <div class="container">
+    <div class="case-hero-inner">
+      <a class="case-back" href="index.html">← Back to portfolio</a>
+      <div class="case-meta">
+        <span class="case-tag">2021 – 2025</span>
+        <span class="case-tag">UX Lead</span>
+        <span class="case-tag">Clever</span>
+      </div>
+      <h1 class="case-hero-title">Intelligent Charging</h1>
+      <p class="case-hero-lead">The majority of Clever's home charging sessions now happen through intelligent charging, reducing the CO₂ footprint by up to 70% per charge.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COVER IMAGE -->
+<img class="case-cover" src="case-intelligent-opladning.jpg" alt="Clever app showing intelligent charging plan on a phone screen">
+
+<!-- FACTS -->
+<section id="case-facts">
+  <div class="container">
+    <div class="facts-grid">
+      <div class="fact-item">
+        <span class="fact-label">Period</span>
+        <span class="fact-value">2021 – 2025</span>
+      </div>
+      <div class="fact-item">
+        <span class="fact-label">My role</span>
+        <span class="fact-value">UX Lead</span>
+      </div>
+      <div class="fact-item">
+        <span class="fact-label">Platform</span>
+        <span class="fact-value">Clever app (iOS and Android)</span>
+      </div>
+      <div class="fact-item">
+        <span class="fact-label">Team</span>
+        <span class="fact-value">PO, UI designer, app and backend developers</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENT -->
+<section id="case-content">
+  <div class="container">
+    <div class="case-content-inner">
+
+      <!-- Impact -->
+      <div class="case-section">
+        <p class="case-section-label">Impact</p>
+        <ul class="case-ul">
+          <li>Up to <strong>70% reduction</strong> in CO₂ footprint per charge</li>
+          <li>The <strong>majority</strong> of home charging sessions now happen via intelligent charging</li>
+          <li>The solution actively contributes to <strong>stabilising the electricity grid</strong></li>
+        </ul>
+      </div>
+
+      <!-- Context -->
+      <div class="case-section">
+        <p class="case-section-label">Context and purpose</p>
+        <p>Throughout the day, both electricity prices and CO₂ intensity vary significantly. An electric vehicle can easily double a household's electricity consumption, and the potential for shifting usage to the best times of day is enormous.</p>
+        <p>Our purpose was to give Clever's customers the ability to charge at the best times, for their wallet, for the climate, and for the grid, without making their everyday life more complicated.</p>
+      </div>
+
+      <!-- Problem -->
+      <div class="case-section">
+        <p class="case-section-label">The problem we solved</p>
+        <p>Even motivated users rarely have the time or overview to actively plan when they charge. It requires knowledge of electricity price fluctuations, CO₂ data, and personal driving patterns, information most people simply do not have access to in a busy day.</p>
+        <p>On top of that, the technological infrastructure in 2021 was not yet mature enough for a fully automated solution. We had a clear vision, but had to build towards it step by step.</p>
+      </div>
+
+      <!-- Research -->
+      <div class="case-section">
+        <p class="case-section-label">Research and insights</p>
+        <p>We conducted qualitative interviews and observations to understand users' charging habits and attitudes, supplemented by quantitative studies to validate our assumptions at scale.</p>
+        <ul class="case-ul">
+          <li>Most users want to do the right thing, but only if it does not come at the cost of convenience or money</li>
+          <li>Users wanted confirmation that their actions actually make a difference</li>
+          <li>Price and CO₂ are closely correlated, but not identical, so the solution needed to weigh both</li>
+          <li>A solution requiring active daily input from the user would have low adoption</li>
+        </ul>
+        <p style="margin-top: 1.25rem;">The central conclusion: automation was not just a feature. It was a prerequisite for the solution to work in practice.</p>
+      </div>
+
+      <!-- Solution -->
+      <div class="case-section">
+        <p class="case-section-label">The solution in the Clever app</p>
+        <p>The vision was clear from the start, but we built towards it in three steps as the technology matured.</p>
+        <div class="case-steps">
+          <div class="case-step">
+            <span class="case-step-number">Step 1</span>
+            <div class="case-step-body">
+              <span class="case-step-title">Delayed charging</span>
+              <span class="case-step-text">Users could choose to delay charging until the night, when electricity is typically cheaper and less CO₂-intensive.</span>
+            </div>
+          </div>
+          <div class="case-step">
+            <span class="case-step-number">Step 2</span>
+            <div class="case-step-body">
+              <span class="case-step-title">Scheduled charging</span>
+              <span class="case-step-text">Users entered their departure time and charging needs in the app. Clever then automatically optimised the timing. This solution proved too complex for many users.</span>
+            </div>
+          </div>
+          <div class="case-step">
+            <span class="case-step-number">Step 3</span>
+            <div class="case-step-body">
+              <span class="case-step-title">Full automation via Enode</span>
+              <span class="case-step-text">Users connect their car through an Enode integration in the app. Clever then takes over completely, optimising continuously without the user having to do anything.</span>
+            </div>
+          </div>
+        </div>
+        <p style="margin-top: 1.5rem;">My role was to drive user understanding and concept development, and to ensure that throughout the process we stayed true to the research insights. The solution needed to feel invisible and trustworthy, not like a task.</p>
+        <p>Intelligent charging is an area we continue to refine and improve on an ongoing basis.</p>
+      </div>
+
+      <!-- Learnings -->
+      <div class="case-section">
+        <p class="case-section-label">What did we learn?</p>
+        <ul class="case-ul">
+          <li>A strong vision can hold the direction even when the technology is not ready yet. It requires patience and incremental solutions.</li>
+          <li>Complexity in the interface is an adoption killer. The more we could remove from the user's screen, the better it worked.</li>
+          <li>Users want to do the right thing, but they need it to be made easy for them and to see that it actually makes a difference.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <span>© 2026 Nicolai Joshua. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+  const toggle = document.getElementById('themeToggle');
+  const icon = document.getElementById('toggleIcon');
+
+  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    document.body.classList.add('dark');
+    icon.textContent = '🌙';
+  }
+
+  toggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    icon.textContent = document.body.classList.contains('dark') ? '🌙' : '☀️';
+  });
+</script>
+</body>
+</html>
