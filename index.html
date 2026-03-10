@@ -551,6 +551,122 @@
     color: var(--gray-mid);
   }
 
+  /* ─── CASE STUDIES ─── */
+  #case-studies {
+    padding: 5rem 0;
+  }
+
+  .cases-heading {
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: var(--black);
+    margin-bottom: 2.5rem;
+  }
+
+  .cases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 480px), 1fr));
+    gap: 1.5rem;
+  }
+
+  .case-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .case-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+  }
+
+  body.dark .case-card:hover {
+    box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+  }
+
+  .case-image {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block;
+  }
+
+  .case-image-placeholder {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .case-image-placeholder span {
+    font-size: 0.75rem;
+    color: var(--gray-mid);
+  }
+
+  .case-body {
+    padding: 1.75rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 1rem;
+  }
+
+  .case-meta {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .case-tag {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.25rem 0.7rem;
+  }
+
+  .case-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    color: var(--black);
+  }
+
+  .case-teaser {
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--body-text);
+  }
+
+  .case-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--black);
+    text-decoration: none;
+    border-bottom: 1px solid var(--black);
+    padding-bottom: 0.15rem;
+    align-self: flex-start;
+    transition: opacity 0.15s;
+  }
+
+  .case-link:hover { opacity: 0.5; }
+
   /* ─── RESPONSIVE ─── */
   @media (max-width: 800px) {
     .nav-title { display: none; }
@@ -559,9 +675,16 @@
     .about-grid { grid-template-columns: 1fr; gap: 2rem; }
     .about-heading { position: static; }
     .footer-inner { flex-direction: column; gap: 0.5rem; }
+    .case-image {
+      aspect-ratio: 4/3;
+      width: 100%;
+    }
   }
 
   @media (max-width: 560px) {
+    .case-image {
+      aspect-ratio: 1/1;
+    }
     .nav-right a:not(:last-child) { display: none; }
   }
 </style>
@@ -695,6 +818,32 @@
 </section>
 
 
+<!-- CASE STUDIES -->
+<section id="case-studies">
+  <div class="container">
+    <h2 class="cases-heading">Case Studies</h2>
+    <div class="cases-grid">
+
+      <!-- Case: Intelligent opladning -->
+      <div class="case-card">
+        <img class="case-image" src="case-intelligent-opladning.jpg" alt="Clever app showing intelligent charging plan on a phone screen">
+        <div class="case-body">
+          <div class="case-meta">
+            <span class="case-tag">2021 – 2025</span>
+            <span class="case-tag">UX Lead</span>
+            <span class="case-tag">Clever</span>
+          </div>
+          <h3 class="case-title">Intelligent Charging</h3>
+          <p class="case-teaser">We set out to make it possible for EV drivers to charge at the times when electricity is cheapest and least CO₂-intensive, without requiring anything from the user in their daily routine.</p>
+          <a class="case-link" href="case-intelligent-charging.html">Read case study →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
 <!-- HOW I WORK -->
 <section id="how-i-work">
   <div class="container">
@@ -732,7 +881,7 @@
     <h2 class="contact-heading">Get in touch</h2>
     <p class="contact-body">I am always happy to have a conversation, whether it is about a potential collaboration, a project, or just the profession.</p>
     <div class="contact-links">
-      <a class="contact-link" href="mailto:nicolai@nicolaijoshua.com">nicolai@nicolaijoshua.com</a>
+      <a class="contact-link" href="/cdn-cgi/l/email-protection#5e30373d31323f371e30373d31323f3734312d362b3f703d3133"><span class="__cf_email__" data-cfemail="e28c8b818d8e838ba28c8b818d8e838b888d918a9783cc818d8f">[email&#160;protected]</span></a>
       <a class="contact-link" href="https://www.linkedin.com/in/nicolaijoshua/" target="_blank">LinkedIn</a>
     </div>
   </div>
@@ -744,7 +893,7 @@
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   const toggle = document.getElementById('themeToggle');
   const icon = document.getElementById('toggleIcon');
 
@@ -765,12 +914,10 @@
   window.addEventListener('scroll', () => {
     const expTop = expSection.getBoundingClientRect().top;
     const windowH = window.innerHeight;
-
     // Start fading when exp section enters view, complete when it covers ~60% of screen
     const fadeStart = windowH;
     const fadeEnd = windowH * 0.3;
     const opacity = Math.min(1, Math.max(0, (expTop - fadeEnd) / (fadeStart - fadeEnd)));
-
     heroInner.style.opacity = opacity;
   }, { passive: true });
 </script>
