@@ -40,64 +40,13 @@
 
   body.dark nav { background: rgba(20, 20, 20, 0.88); }
 
-  .theme-toggle {
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    width: 52px;
-    height: 28px;
-    cursor: pointer;
-    position: relative;
-    display: flex;
-    align-items: center;
-    padding: 0 4px;
-    transition: background 0.2s, border-color 0.2s;
-    flex-shrink: 0;
-  }
-
-  .toggle-thumb {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: var(--black);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), background 0.2s;
-    font-size: 11px;
-    line-height: 1;
-  }
-
+  .theme-toggle { background: none; border: 1px solid var(--border); border-radius: 999px; width: 52px; height: 28px; cursor: pointer; position: relative; display: flex; align-items: center; padding: 0 4px; transition: background 0.2s, border-color 0.2s; flex-shrink: 0; }
+  .toggle-thumb { width: 20px; height: 20px; border-radius: 50%; background: var(--black); display: flex; align-items: center; justify-content: center; transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), background 0.2s; font-size: 11px; line-height: 1; }
   body.dark .toggle-thumb { transform: translateX(24px); }
   html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--bg);
-    color: var(--black);
-    -webkit-font-smoothing: antialiased;
-    font-size: 16px;
-  }
-
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    background: rgba(240, 242, 245, 0.88);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  }
-
-  .nav-inner {
-    max-width: var(--max);
-    margin: 0 auto;
-    padding: 0 2.5rem;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--black); -webkit-font-smoothing: antialiased; font-size: 16px; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(240, 242, 245, 0.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+  .nav-inner { max-width: var(--max); margin: 0 auto; padding: 0 2.5rem; height: 56px; display: flex; align-items: center; justify-content: space-between; }
   .nav-left { display: flex; align-items: center; gap: 1rem; }
   .nav-line { width: 28px; height: 1.5px; background: var(--black); flex-shrink: 0; }
   .nav-name { font-size: 0.9rem; font-weight: 500; color: var(--black); text-decoration: none; letter-spacing: -0.01em; }
@@ -105,59 +54,27 @@
   .nav-right { display: flex; align-items: center; gap: 1.5rem; }
   .nav-back { font-size: 0.82rem; font-weight: 400; color: var(--gray-mid); text-decoration: none; transition: color 0.15s; }
   .nav-back:hover { color: var(--black); }
-
   .container { max-width: var(--max); margin: 0 auto; padding: 0 2.5rem; }
   #case-hero { padding: 9rem 0 4rem; }
   .case-hero-inner { max-width: var(--content); margin: 0 auto; }
-
-  .case-back {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.82rem;
-    font-weight: 400;
-    color: var(--gray-mid);
-    text-decoration: none;
-    margin-bottom: 2.5rem;
-    transition: color 0.15s;
-  }
-
+  .case-back { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; font-weight: 400; color: var(--gray-mid); text-decoration: none; margin-bottom: 2.5rem; transition: color 0.15s; }
   .case-back:hover { color: var(--black); }
   .case-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
   .case-tag { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-mid); border: 1px solid var(--border); border-radius: 999px; padding: 0.25rem 0.7rem; }
   .case-hero-title { font-size: clamp(2.1rem, 4.4vw, 4rem); font-weight: 600; letter-spacing: -0.045em; line-height: 1.08; color: var(--black); margin-bottom: 1.5rem; }
   .case-hero-lead { font-size: 1.1rem; font-weight: 300; line-height: 1.85; color: var(--body-text); max-width: 62ch; }
-
   .case-cover-wrap { max-width: 1400px; margin: 0 auto; padding: 0 2.5rem; }
   .case-cover-frame { width: 100%; aspect-ratio: 16/7; border-radius: var(--radius); overflow: hidden; background: var(--border); }
   .case-cover { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-  .media-placeholder {
-    width: 100%;
-    aspect-ratio: 16/9;
-    border-radius: var(--radius);
-    background: var(--card-bg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--gray-mid);
-    font-size: 0.82rem;
-    font-weight: 300;
-    text-align: center;
-    padding: 2rem;
-    margin: 1rem 0 1.5rem;
-  }
-
+  .media-placeholder { width: 100%; aspect-ratio: 16/9; border-radius: var(--radius); background: var(--card-bg); display: flex; align-items: center; justify-content: center; color: var(--gray-mid); font-size: 0.82rem; font-weight: 300; text-align: center; padding: 2rem; margin: 1rem 0 1.5rem; }
   .case-inline-media { width: 100%; aspect-ratio: 16/9; border-radius: var(--radius); object-fit: cover; display: block; background: var(--card-bg); margin: 1rem 0 1.5rem; }
   .case-bottom-media { max-width: 960px; margin: 0 auto 7rem; padding: 0 2.5rem; }
   .case-bottom-image { width: 100%; aspect-ratio: 16/9; border-radius: var(--radius); object-fit: cover; display: block; background: var(--card-bg); }
-
   #case-facts { padding: 4rem 0 3.5rem; }
   .facts-grid { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; padding-bottom: 3.5rem; border-bottom: 1px solid var(--border); }
   .fact-item { display: flex; flex-direction: column; gap: 0.35rem; }
   .fact-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-mid); }
   .fact-value { font-size: 0.9rem; font-weight: 400; color: var(--black); line-height: 1.45; }
-
   #case-content { padding: 0 0 4rem; }
   .case-content-inner { max-width: 960px; margin: 0 auto; }
   .case-section { display: grid; grid-template-columns: var(--label-width) minmax(0, 1fr); gap: 3.5rem; padding: 3.5rem 0; border-top: 1px solid var(--border); }
@@ -166,19 +83,16 @@
   .case-section-content { max-width: var(--content); }
   .case-section p { font-size: 1rem; font-weight: 300; line-height: 1.85; color: var(--body-text); margin-bottom: 1.25rem; }
   .case-section p:last-child { margin-bottom: 0; }
-
   .case-ul { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
   .case-ul li { font-size: 1rem; font-weight: 300; line-height: 1.75; color: var(--body-text); padding-left: 1.25rem; position: relative; }
   .case-ul li::before { content: '—'; position: absolute; left: 0; color: var(--gray-mid); font-weight: 300; }
   .case-ul li strong { font-weight: 500; color: var(--black); }
-
   .panel, .case-impact, .research-bars, .mini-flow { background: var(--card-bg); border-radius: var(--radius); padding: var(--panel-padding); }
   .panel p { color: var(--body-text); }
   .case-impact { display: flex; gap: 3rem; flex-wrap: wrap; margin-top: 1rem; }
   .impact-stat { display: flex; flex-direction: column; gap: 0.3rem; }
   .impact-value { font-size: 1.35rem; font-weight: 600; letter-spacing: -0.03em; color: var(--black); }
   .impact-label { font-size: 0.78rem; font-weight: 300; color: var(--gray-mid); max-width: 20ch; line-height: 1.45; }
-
   .insight-panel { border-left: 2px solid var(--black); padding: 0.25rem 0 0.25rem 1.5rem; }
   .insight-panel p { font-size: 1.08rem; color: var(--body-text); }
   .research-bars { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 1.5rem; }
@@ -187,126 +101,47 @@
   .research-bar-top strong { font-weight: 500; color: var(--black); }
   .research-bar-track { width: 100%; height: 6px; border-radius: 999px; background: var(--border); overflow: hidden; }
   .research-bar-track div { height: 100%; border-radius: 999px; background: var(--black); }
-
   .mini-flow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin: 1rem 0 1.5rem; }
   .mini-flow-item { display: flex; flex-direction: column; gap: 0.65rem; }
   .mini-flow-number { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; color: var(--gray-mid); text-transform: uppercase; }
   .mini-flow-title { font-size: 0.95rem; font-weight: 500; color: var(--black); line-height: 1.35; }
   .mini-flow-text { font-size: 0.82rem; font-weight: 300; color: var(--body-text); line-height: 1.6; }
-
   footer { border-top: 1px solid var(--border); }
   .footer-inner { max-width: var(--max); margin: 0 auto; padding: 1.5rem 2.5rem; font-size: 0.75rem; color: var(--gray-mid); }
-
-  @media (max-width: 900px) {
-    .facts-grid { grid-template-columns: repeat(2, 1fr); }
-    .case-section { grid-template-columns: 1fr; gap: 1.25rem; padding: 3rem 0; }
-    .case-section-label { padding-top: 0; }
-    .mini-flow { grid-template-columns: 1fr; }
-  }
-
-  @media (max-width: 560px) {
-    :root { --panel-padding: 1.35rem; }
-    .container, .nav-inner, .case-cover-wrap, .case-bottom-media { padding-left: 1.25rem; padding-right: 1.25rem; }
-    .nav-title { display: none; }
-    .nav-right a:not(:last-child) { display: none; }
-    #case-hero { padding: 7rem 0 3rem; }
-    .case-cover-frame { aspect-ratio: 1/1; border-radius: 10px; }
-    .facts-grid { grid-template-columns: 1fr; gap: 1.5rem; padding-bottom: 3rem; }
-    .case-impact { gap: 1.5rem; }
-  }
+  @media (max-width: 900px) { .facts-grid { grid-template-columns: repeat(2, 1fr); } .case-section { grid-template-columns: 1fr; gap: 1.25rem; padding: 3rem 0; } .case-section-label { padding-top: 0; } .mini-flow { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { :root { --panel-padding: 1.35rem; } .container, .nav-inner, .case-cover-wrap, .case-bottom-media { padding-left: 1.25rem; padding-right: 1.25rem; } .nav-title { display: none; } .nav-right a:not(:last-child) { display: none; } #case-hero { padding: 7rem 0 3rem; } .case-cover-frame { aspect-ratio: 1/1; border-radius: 10px; } .facts-grid { grid-template-columns: 1fr; gap: 1.5rem; padding-bottom: 3rem; } .case-impact { gap: 1.5rem; } }
 </style>
 </head>
 <body>
 
 <nav>
   <div class="nav-inner">
-    <div class="nav-left">
-      <div class="nav-line"></div>
-      <a class="nav-name" href="index.html">Nicolai Joshua</a>
-      <span class="nav-title">Senior UX Designer</span>
-    </div>
-    <div class="nav-right">
-      <a class="nav-back" href="https://shop.nicolaijoshua.com" target="_blank">↗ Print Shop</a>
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-        <span class="toggle-thumb" id="toggleIcon">☀️</span>
-      </button>
-    </div>
+    <div class="nav-left"><div class="nav-line"></div><a class="nav-name" href="index.html">Nicolai Joshua</a><span class="nav-title">Senior UX Designer</span></div>
+    <div class="nav-right"><a class="nav-back" href="https://shop.nicolaijoshua.com" target="_blank">↗ Print Shop</a><button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"><span class="toggle-thumb" id="toggleIcon">☀️</span></button></div>
   </div>
 </nav>
 
-<section id="case-hero">
-  <div class="container">
-    <div class="case-hero-inner">
-      <a class="case-back" href="index.html">← Back to portfolio</a>
-      <div class="case-meta">
-        <span class="case-tag">2026</span>
-        <span class="case-tag">Lead UX Designer</span>
-        <span class="case-tag">Clever</span>
-      </div>
-      <h1 class="case-hero-title">Making route planning accessible for every EV driver</h1>
-      <p class="case-hero-lead">Many EV drivers still lack reliable route planning. Rather than building another navigation platform, we explored how Clever could help users discover relevant charging stops directly in the app.</p>
-    </div>
-  </div>
-</section>
+<section id="case-hero"><div class="container"><div class="case-hero-inner"><a class="case-back" href="index.html">← Back to portfolio</a><div class="case-meta"><span class="case-tag">2026</span><span class="case-tag">Lead UX Designer</span><span class="case-tag">Clever</span></div><h1 class="case-hero-title">Making route planning accessible for every EV driver</h1><p class="case-hero-lead">Many EV drivers still lack reliable route planning. Rather than building another navigation platform, we explored how Clever could help users discover relevant charging stops directly in the app.</p></div></div></section>
 
-<div class="case-cover-wrap">
-  <div class="case-cover-frame">
-    <video class="case-cover" autoplay muted loop playsinline poster="case-route-planning-hero.png">
-      <source src="assets/cases/route-planning/routeplanner.mov" type="video/quicktime">
-      <img class="case-cover" src="case-route-planning-hero.png" alt="Clever route planning feature showing suggested charging stops and navigation handoff">
-    </video>
-  </div>
-</div>
+<div class="case-cover-wrap"><div class="case-cover-frame"><video class="case-cover" autoplay muted loop playsinline preload="metadata" poster="case-route-planning-hero.png"><source src="assets/cases/route-planning/routeplanner.mp4" type="video/mp4"><source src="assets/cases/route-planning/routeplanner.mov" type="video/quicktime"><img class="case-cover" src="case-route-planning-hero.png" alt="Clever route planning feature showing suggested charging stops and navigation handoff"></video></div></div>
 
-<section id="case-facts">
-  <div class="container">
-    <div class="facts-grid">
-      <div class="fact-item"><span class="fact-label">Period</span><span class="fact-value">2026</span></div>
-      <div class="fact-item"><span class="fact-label">My role</span><span class="fact-value">Lead UX Designer</span></div>
-      <div class="fact-item"><span class="fact-label">Platform</span><span class="fact-value">Clever app (iOS and Android)</span></div>
-      <div class="fact-item"><span class="fact-label">Team</span><span class="fact-value">PO, app and backend developers</span></div>
-    </div>
-  </div>
-</section>
+<section id="case-facts"><div class="container"><div class="facts-grid"><div class="fact-item"><span class="fact-label">Period</span><span class="fact-value">2026</span></div><div class="fact-item"><span class="fact-label">My role</span><span class="fact-value">Lead UX Designer</span></div><div class="fact-item"><span class="fact-label">Platform</span><span class="fact-value">Clever app (iOS and Android)</span></div><div class="fact-item"><span class="fact-label">Team</span><span class="fact-value">PO, app and backend developers</span></div></div></div></section>
 
-<section id="case-content">
-  <div class="container">
-    <div class="case-content-inner">
+<section id="case-content"><div class="container"><div class="case-content-inner">
+<div class="case-section"><p class="case-section-label">Impact</p><div class="case-section-content"><ul class="case-ul"><li>Released to external beta testers in <strong>May 2026</strong></li><li>Positive early feedback from <strong>TestFlight participants</strong></li><li>Established Clever's first <strong>route-planning capability</strong></li><li>Reduced dependency on <strong>third-party route planning tools</strong></li><li>Created a foundation for future <strong>vehicle integrations</strong></li></ul></div></div>
+<div class="case-section"><p class="case-section-label">My contribution</p><div class="case-section-content"><ul class="case-ul"><li>Led discovery and research synthesis</li><li>Defined the problem space and opportunity</li><li>Facilitated workshops and concept development</li><li>Balanced user needs with business objectives</li><li>Collaborated closely with developers to shape a feasible solution</li></ul></div></div>
+<div class="case-section"><p class="case-section-label">Context and purpose</p><div class="case-section-content"><p>One of the biggest pain points of owning an electric vehicle is finding relevant charging opportunities while travelling.</p><p>Through both qualitative and quantitative research, we repeatedly saw that many users relied on third-party route planning tools to find charging stops. This meant that Clever had limited influence on a critical part of the charging journey, and many of these tools did not surface the full Clever network or our charging partners.</p><p>At the same time, many vehicles still lack robust route planning capabilities built into the car itself.</p><p>Our ambition was not to build another navigation platform. Instead, we wanted to help users make better charging decisions directly within the Clever app.</p></div></div>
+<div class="case-section"><p class="case-section-label">The problem we solved</p><div class="case-section-content"><p>Finding a charging location is not simply about finding the nearest charger.</p><p>Drivers need confidence that a charging stop will still be relevant by the time they arrive. Current availability alone is often a poor indicator, and users frequently struggle to assess factors such as charger speed, reliability, location quality, and expected demand.</p><p>For Clever, this represented both a customer experience challenge and a business opportunity. Some locations regularly experienced congestion, while nearby locations often had significant spare capacity.</p></div></div>
+<div class="case-section"><p class="case-section-label">Design challenge</p><div class="case-section-content"><div class="panel"><p>How might we help EV drivers discover relevant charging stops without relying on direct vehicle integration?</p><p>We needed a solution that worked across vehicle brands, reduced complexity for users, and supported better utilisation of Clever's charging network.</p></div></div></div>
+<div class="case-section"><p class="case-section-label">Research and insights</p><div class="case-section-content"><p>To understand the charging-on-the-go journey, we combined annual customer satisfaction surveys, a dedicated survey distributed to more than 1,000 members of Clever's customer panel, and approximately 10 in-depth qualitative interviews.</p><p>One of the first things we learned was that finding charging opportunities remains a frequent activity for EV drivers.</p><div class="case-impact"><div class="impact-stat"><span class="impact-value">45%</span><span class="impact-label">Charge on the go at least once a week</span></div><div class="impact-stat"><span class="impact-value">79%</span><span class="impact-label">Charge on the go at least once or twice per month</span></div></div></div></div>
+<div class="case-section"><p class="case-section-label">Key insight</p><div class="case-section-content"><div class="insight-panel"><p>While evaluating the charging-on-the-go journey, we realised that users were not necessarily looking for a complete route planning platform.</p><p>What they needed was confidence that they could find relevant charging opportunities while travelling.</p><p>This shifted our focus from building navigation to supporting better charging decisions.</p></div></div></div>
+<div class="case-section"><p class="case-section-label">What influences charging stop selection?</p><div class="case-section-content"><p>Users do not simply look for the nearest charger. Their decision is influenced by a combination of practical and contextual factors.</p><div class="research-bars"><div class="research-bar"><div class="research-bar-top"><span>Fast charging / many outlets</span><strong>80.7%</strong></div><div class="research-bar-track"><div style="width:80.7%"></div></div></div><div class="research-bar"><div class="research-bar-top"><span>Close to route</span><strong>61.4%</strong></div><div class="research-bar-track"><div style="width:61.4%"></div></div></div><div class="research-bar"><div class="research-bar-top"><span>Nearby toilet</span><strong>41.6%</strong></div><div class="research-bar-track"><div style="width:41.6%"></div></div></div><div class="research-bar"><div class="research-bar-top"><span>Food and drinks</span><strong>25.3%</strong></div><div class="research-bar-track"><div style="width:25.3%"></div></div></div></div></div></div>
+<div class="case-section"><p class="case-section-label">The solution in the Clever app</p><div class="case-section-content"><p>Rather than building a complete navigation platform, we focused on helping users make better charging decisions.</p><img class="case-inline-media" src="assets/cases/route-planning/solution-journey.png" alt="Route planning user journey in the Clever app"><div class="mini-flow"><div class="mini-flow-item"><span class="mini-flow-number">Step 1</span><span class="mini-flow-title">Search destination</span><span class="mini-flow-text">Users search for where they want to go directly in the Clever app.</span></div><div class="mini-flow-item"><span class="mini-flow-number">Step 2</span><span class="mini-flow-title">Review suggestions</span><span class="mini-flow-text">Clever suggests charging stops within 1,000 meters of the route.</span></div><div class="mini-flow-item"><span class="mini-flow-number">Step 3</span><span class="mini-flow-title">Send to navigation</span><span class="mini-flow-text">Users choose preferred stops and transfer the route to their navigation app.</span></div></div><p>Clever suggests relevant charging locations close to the route, prioritising high-speed chargers and locations with many outlets to reduce the risk of waiting.</p><p>This approach allowed us to create value without requiring direct vehicle integration, making the feature available to all Clever customers regardless of vehicle type.</p></div></div>
+<div class="case-section"><p class="case-section-label">What did I learn?</p><div class="case-section-content"><ul class="case-ul"><li>Impactful solutions do not always require complex technology. Sometimes the most valuable solution is the one that reduces complexity.</li><li>Route planning had been viewed primarily as a technical challenge, but users were not necessarily asking for a complete route planning platform.</li><li>Looking back, I learned that we spent too much time comparing ourselves to specialised route planning tools and too little time focusing on the underlying user need.</li><li>The project also raised an important strategic question: where can Clever create unique value as vehicle software continues to improve?</li></ul></div></div>
+</div></div></section>
 
-      <div class="case-section"><p class="case-section-label">Impact</p><div class="case-section-content"><ul class="case-ul"><li>Released to external beta testers in <strong>May 2026</strong></li><li>Positive early feedback from <strong>TestFlight participants</strong></li><li>Established Clever's first <strong>route-planning capability</strong></li><li>Reduced dependency on <strong>third-party route planning tools</strong></li><li>Created a foundation for future <strong>vehicle integrations</strong></li></ul></div></div>
-      <div class="case-section"><p class="case-section-label">My contribution</p><div class="case-section-content"><ul class="case-ul"><li>Led discovery and research synthesis</li><li>Defined the problem space and opportunity</li><li>Facilitated workshops and concept development</li><li>Balanced user needs with business objectives</li><li>Collaborated closely with developers to shape a feasible solution</li></ul></div></div>
-      <div class="case-section"><p class="case-section-label">Context and purpose</p><div class="case-section-content"><p>One of the biggest pain points of owning an electric vehicle is finding relevant charging opportunities while travelling.</p><p>Through both qualitative and quantitative research, we repeatedly saw that many users relied on third-party route planning tools to find charging stops. This meant that Clever had limited influence on a critical part of the charging journey, and many of these tools did not surface the full Clever network or our charging partners.</p><p>At the same time, many vehicles still lack robust route planning capabilities built into the car itself.</p><p>Our ambition was not to build another navigation platform. Instead, we wanted to help users make better charging decisions directly within the Clever app.</p></div></div>
-      <div class="case-section"><p class="case-section-label">The problem we solved</p><div class="case-section-content"><p>Finding a charging location is not simply about finding the nearest charger.</p><p>Drivers need confidence that a charging stop will still be relevant by the time they arrive. Current availability alone is often a poor indicator, and users frequently struggle to assess factors such as charger speed, reliability, location quality, and expected demand.</p><p>For Clever, this represented both a customer experience challenge and a business opportunity. Some locations regularly experienced congestion, while nearby locations often had significant spare capacity.</p></div></div>
-      <div class="case-section"><p class="case-section-label">Design challenge</p><div class="case-section-content"><div class="panel"><p>How might we help EV drivers discover relevant charging stops without relying on direct vehicle integration?</p><p>We needed a solution that worked across vehicle brands, reduced complexity for users, and supported better utilisation of Clever's charging network.</p></div></div></div>
-      <div class="case-section"><p class="case-section-label">Research and insights</p><div class="case-section-content"><p>To understand the charging-on-the-go journey, we combined annual customer satisfaction surveys, a dedicated survey distributed to more than 1,000 members of Clever's customer panel, and approximately 10 in-depth qualitative interviews.</p><p>One of the first things we learned was that finding charging opportunities remains a frequent activity for EV drivers.</p><div class="case-impact"><div class="impact-stat"><span class="impact-value">45%</span><span class="impact-label">Charge on the go at least once a week</span></div><div class="impact-stat"><span class="impact-value">79%</span><span class="impact-label">Charge on the go at least once or twice per month</span></div></div></div></div>
-      <div class="case-section"><p class="case-section-label">Key insight</p><div class="case-section-content"><div class="insight-panel"><p>While evaluating the charging-on-the-go journey, we realised that users were not necessarily looking for a complete route planning platform.</p><p>What they needed was confidence that they could find relevant charging opportunities while travelling.</p><p>This shifted our focus from building navigation to supporting better charging decisions.</p></div></div></div>
-      <div class="case-section"><p class="case-section-label">What influences charging stop selection?</p><div class="case-section-content"><p>Users do not simply look for the nearest charger. Their decision is influenced by a combination of practical and contextual factors.</p><div class="research-bars"><div class="research-bar"><div class="research-bar-top"><span>Fast charging / many outlets</span><strong>80.7%</strong></div><div class="research-bar-track"><div style="width:80.7%"></div></div></div><div class="research-bar"><div class="research-bar-top"><span>Close to route</span><strong>61.4%</strong></div><div class="research-bar-track"><div style="width:61.4%"></div></div></div><div class="research-bar"><div class="research-bar-top"><span>Nearby toilet</span><strong>41.6%</strong></div><div class="research-bar-track"><div style="width:41.6%"></div></div></div><div class="research-bar"><div class="research-bar-top"><span>Food and drinks</span><strong>25.3%</strong></div><div class="research-bar-track"><div style="width:25.3%"></div></div></div></div></div></div>
-      <div class="case-section"><p class="case-section-label">The solution in the Clever app</p><div class="case-section-content"><p>Rather than building a complete navigation platform, we focused on helping users make better charging decisions.</p><img class="case-inline-media" src="assets/cases/route-planning/solution-journey.png" alt="Route planning user journey in the Clever app"><div class="mini-flow"><div class="mini-flow-item"><span class="mini-flow-number">Step 1</span><span class="mini-flow-title">Search destination</span><span class="mini-flow-text">Users search for where they want to go directly in the Clever app.</span></div><div class="mini-flow-item"><span class="mini-flow-number">Step 2</span><span class="mini-flow-title">Review suggestions</span><span class="mini-flow-text">Clever suggests charging stops within 1,000 meters of the route.</span></div><div class="mini-flow-item"><span class="mini-flow-number">Step 3</span><span class="mini-flow-title">Send to navigation</span><span class="mini-flow-text">Users choose preferred stops and transfer the route to their navigation app.</span></div></div><p>Clever suggests relevant charging locations close to the route, prioritising high-speed chargers and locations with many outlets to reduce the risk of waiting.</p><p>This approach allowed us to create value without requiring direct vehicle integration, making the feature available to all Clever customers regardless of vehicle type.</p></div></div>
-      <div class="case-section"><p class="case-section-label">What did I learn?</p><div class="case-section-content"><ul class="case-ul"><li>Impactful solutions do not always require complex technology. Sometimes the most valuable solution is the one that reduces complexity.</li><li>Route planning had been viewed primarily as a technical challenge, but users were not necessarily asking for a complete route planning platform.</li><li>Looking back, I learned that we spent too much time comparing ourselves to specialised route planning tools and too little time focusing on the underlying user need.</li><li>The project also raised an important strategic question: where can Clever create unique value as vehicle software continues to improve?</li></ul></div></div>
-
-    </div>
-  </div>
-</section>
-
-<div class="case-bottom-media">
-  <img class="case-bottom-image" src="assets/cases/route-planning/bottom-image.png" alt="Additional route planning screens from the Clever app">
-</div>
-
+<div class="case-bottom-media"><img class="case-bottom-image" src="assets/cases/route-planning/bottom-image.png" alt="Additional route planning screens from the Clever app"></div>
 <footer><div class="footer-inner"><span>© 2026 Nicolai Joshua. All rights reserved.</span></div></footer>
-
-<script>
-  const toggle = document.getElementById('themeToggle');
-  const icon = document.getElementById('toggleIcon');
-
-  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    document.body.classList.add('dark');
-    icon.textContent = '🌙';
-  }
-
-  toggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark');
-    icon.textContent = document.body.classList.contains('dark') ? '🌙' : '☀️';
-  });
-</script>
+<script>const toggle=document.getElementById('themeToggle');const icon=document.getElementById('toggleIcon');if(window.matchMedia('(prefers-color-scheme: dark)').matches){document.body.classList.add('dark');icon.textContent='🌙'}toggle.addEventListener('click',()=>{document.body.classList.toggle('dark');icon.textContent=document.body.classList.contains('dark')?'🌙':'☀️'});</script>
 </body>
 </html>
