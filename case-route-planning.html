@@ -150,6 +150,7 @@
 
   .case-inline-media { width: 100%; aspect-ratio: 16/9; border-radius: var(--radius); object-fit: cover; display: block; background: var(--card-bg); margin: 1rem 0 1.5rem; }
   .case-bottom-media { max-width: 960px; margin: 0 auto 7rem; padding: 0 2.5rem; }
+  .case-bottom-image { width: 100%; aspect-ratio: 16/9; border-radius: var(--radius); object-fit: cover; display: block; background: var(--card-bg); }
 
   #case-facts { padding: 4rem 0 3.5rem; }
   .facts-grid { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; padding-bottom: 3.5rem; border-bottom: 1px solid var(--border); }
@@ -272,139 +273,23 @@
   <div class="container">
     <div class="case-content-inner">
 
-      <div class="case-section">
-        <p class="case-section-label">Impact</p>
-        <div class="case-section-content">
-          <ul class="case-ul">
-            <li>Released to external beta testers in <strong>May 2026</strong></li>
-            <li>Positive early feedback from <strong>TestFlight participants</strong></li>
-            <li>Established Clever's first <strong>route-planning capability</strong></li>
-            <li>Reduced dependency on <strong>third-party route planning tools</strong></li>
-            <li>Created a foundation for future <strong>vehicle integrations</strong></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="case-section">
-        <p class="case-section-label">My contribution</p>
-        <div class="case-section-content">
-          <ul class="case-ul">
-            <li>Led discovery and research synthesis</li>
-            <li>Defined the problem space and opportunity</li>
-            <li>Facilitated workshops and concept development</li>
-            <li>Balanced user needs with business objectives</li>
-            <li>Collaborated closely with developers to shape a feasible solution</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="case-section">
-        <p class="case-section-label">Context and purpose</p>
-        <div class="case-section-content">
-          <p>One of the biggest pain points of owning an electric vehicle is finding relevant charging opportunities while travelling.</p>
-          <p>Through both qualitative and quantitative research, we repeatedly saw that many users relied on third-party route planning tools to find charging stops. This meant that Clever had limited influence on a critical part of the charging journey, and many of these tools did not surface the full Clever network or our charging partners.</p>
-          <p>At the same time, many vehicles still lack robust route planning capabilities built into the car itself.</p>
-          <p>Our ambition was not to build another navigation platform. Instead, we wanted to help users make better charging decisions directly within the Clever app.</p>
-        </div>
-      </div>
-
-      <div class="case-section">
-        <p class="case-section-label">The problem we solved</p>
-        <div class="case-section-content">
-          <p>Finding a charging location is not simply about finding the nearest charger.</p>
-          <p>Drivers need confidence that a charging stop will still be relevant by the time they arrive. Current availability alone is often a poor indicator, and users frequently struggle to assess factors such as charger speed, reliability, location quality, and expected demand.</p>
-          <p>For Clever, this represented both a customer experience challenge and a business opportunity. Some locations regularly experienced congestion, while nearby locations often had significant spare capacity.</p>
-        </div>
-      </div>
-
-      <div class="case-section">
-        <p class="case-section-label">Design challenge</p>
-        <div class="case-section-content">
-          <div class="panel">
-            <p>How might we help EV drivers discover relevant charging stops without relying on direct vehicle integration?</p>
-            <p>We needed a solution that worked across vehicle brands, reduced complexity for users, and supported better utilisation of Clever's charging network.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="case-section">
-        <p class="case-section-label">Research and insights</p>
-        <div class="case-section-content">
-          <p>To understand the charging-on-the-go journey, we combined annual customer satisfaction surveys, a dedicated survey distributed to more than 1,000 members of Clever's customer panel, and approximately 10 in-depth qualitative interviews.</p>
-          <p>One of the first things we learned was that finding charging opportunities remains a frequent activity for EV drivers.</p>
-          <div class="case-impact">
-            <div class="impact-stat"><span class="impact-value">45%</span><span class="impact-label">Charge on the go at least once a week</span></div>
-            <div class="impact-stat"><span class="impact-value">79%</span><span class="impact-label">Charge on the go at least once or twice per month</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="case-section">
-        <p class="case-section-label">Key insight</p>
-        <div class="case-section-content">
-          <div class="insight-panel">
-            <p>While evaluating the charging-on-the-go journey, we realised that users were not necessarily looking for a complete route planning platform.</p>
-            <p>What they needed was confidence that they could find relevant charging opportunities while travelling.</p>
-            <p>This shifted our focus from building navigation to supporting better charging decisions.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="case-section">
-        <p class="case-section-label">What influences charging stop selection?</p>
-        <div class="case-section-content">
-          <p>Users do not simply look for the nearest charger. Their decision is influenced by a combination of practical and contextual factors.</p>
-          <div class="research-bars">
-            <div class="research-bar"><div class="research-bar-top"><span>Fast charging / many outlets</span><strong>80.7%</strong></div><div class="research-bar-track"><div style="width:80.7%"></div></div></div>
-            <div class="research-bar"><div class="research-bar-top"><span>Close to route</span><strong>61.4%</strong></div><div class="research-bar-track"><div style="width:61.4%"></div></div></div>
-            <div class="research-bar"><div class="research-bar-top"><span>Nearby toilet</span><strong>41.6%</strong></div><div class="research-bar-track"><div style="width:41.6%"></div></div></div>
-            <div class="research-bar"><div class="research-bar-top"><span>Food and drinks</span><strong>25.3%</strong></div><div class="research-bar-track"><div style="width:25.3%"></div></div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="case-section">
-        <p class="case-section-label">The solution in the Clever app</p>
-        <div class="case-section-content">
-          <p>Rather than building a complete navigation platform, we focused on helping users make better charging decisions.</p>
-
-          <div class="media-placeholder">
-            Solution journey image placeholder<br>
-            assets/cases/route-planning/solution-journey.png
-          </div>
-
-          <div class="mini-flow">
-            <div class="mini-flow-item"><span class="mini-flow-number">Step 1</span><span class="mini-flow-title">Search destination</span><span class="mini-flow-text">Users search for where they want to go directly in the Clever app.</span></div>
-            <div class="mini-flow-item"><span class="mini-flow-number">Step 2</span><span class="mini-flow-title">Review suggestions</span><span class="mini-flow-text">Clever suggests charging stops within 1,000 meters of the route.</span></div>
-            <div class="mini-flow-item"><span class="mini-flow-number">Step 3</span><span class="mini-flow-title">Send to navigation</span><span class="mini-flow-text">Users choose preferred stops and transfer the route to their navigation app.</span></div>
-          </div>
-
-          <p>Clever suggests relevant charging locations close to the route, prioritising high-speed chargers and locations with many outlets to reduce the risk of waiting.</p>
-          <p>This approach allowed us to create value without requiring direct vehicle integration, making the feature available to all Clever customers regardless of vehicle type.</p>
-        </div>
-      </div>
-
-      <div class="case-section">
-        <p class="case-section-label">What did I learn?</p>
-        <div class="case-section-content">
-          <ul class="case-ul">
-            <li>Impactful solutions do not always require complex technology. Sometimes the most valuable solution is the one that reduces complexity.</li>
-            <li>Route planning had been viewed primarily as a technical challenge, but users were not necessarily asking for a complete route planning platform.</li>
-            <li>Looking back, I learned that we spent too much time comparing ourselves to specialised route planning tools and too little time focusing on the underlying user need.</li>
-            <li>The project also raised an important strategic question: where can Clever create unique value as vehicle software continues to improve?</li>
-          </ul>
-        </div>
-      </div>
+      <div class="case-section"><p class="case-section-label">Impact</p><div class="case-section-content"><ul class="case-ul"><li>Released to external beta testers in <strong>May 2026</strong></li><li>Positive early feedback from <strong>TestFlight participants</strong></li><li>Established Clever's first <strong>route-planning capability</strong></li><li>Reduced dependency on <strong>third-party route planning tools</strong></li><li>Created a foundation for future <strong>vehicle integrations</strong></li></ul></div></div>
+      <div class="case-section"><p class="case-section-label">My contribution</p><div class="case-section-content"><ul class="case-ul"><li>Led discovery and research synthesis</li><li>Defined the problem space and opportunity</li><li>Facilitated workshops and concept development</li><li>Balanced user needs with business objectives</li><li>Collaborated closely with developers to shape a feasible solution</li></ul></div></div>
+      <div class="case-section"><p class="case-section-label">Context and purpose</p><div class="case-section-content"><p>One of the biggest pain points of owning an electric vehicle is finding relevant charging opportunities while travelling.</p><p>Through both qualitative and quantitative research, we repeatedly saw that many users relied on third-party route planning tools to find charging stops. This meant that Clever had limited influence on a critical part of the charging journey, and many of these tools did not surface the full Clever network or our charging partners.</p><p>At the same time, many vehicles still lack robust route planning capabilities built into the car itself.</p><p>Our ambition was not to build another navigation platform. Instead, we wanted to help users make better charging decisions directly within the Clever app.</p></div></div>
+      <div class="case-section"><p class="case-section-label">The problem we solved</p><div class="case-section-content"><p>Finding a charging location is not simply about finding the nearest charger.</p><p>Drivers need confidence that a charging stop will still be relevant by the time they arrive. Current availability alone is often a poor indicator, and users frequently struggle to assess factors such as charger speed, reliability, location quality, and expected demand.</p><p>For Clever, this represented both a customer experience challenge and a business opportunity. Some locations regularly experienced congestion, while nearby locations often had significant spare capacity.</p></div></div>
+      <div class="case-section"><p class="case-section-label">Design challenge</p><div class="case-section-content"><div class="panel"><p>How might we help EV drivers discover relevant charging stops without relying on direct vehicle integration?</p><p>We needed a solution that worked across vehicle brands, reduced complexity for users, and supported better utilisation of Clever's charging network.</p></div></div></div>
+      <div class="case-section"><p class="case-section-label">Research and insights</p><div class="case-section-content"><p>To understand the charging-on-the-go journey, we combined annual customer satisfaction surveys, a dedicated survey distributed to more than 1,000 members of Clever's customer panel, and approximately 10 in-depth qualitative interviews.</p><p>One of the first things we learned was that finding charging opportunities remains a frequent activity for EV drivers.</p><div class="case-impact"><div class="impact-stat"><span class="impact-value">45%</span><span class="impact-label">Charge on the go at least once a week</span></div><div class="impact-stat"><span class="impact-value">79%</span><span class="impact-label">Charge on the go at least once or twice per month</span></div></div></div></div>
+      <div class="case-section"><p class="case-section-label">Key insight</p><div class="case-section-content"><div class="insight-panel"><p>While evaluating the charging-on-the-go journey, we realised that users were not necessarily looking for a complete route planning platform.</p><p>What they needed was confidence that they could find relevant charging opportunities while travelling.</p><p>This shifted our focus from building navigation to supporting better charging decisions.</p></div></div></div>
+      <div class="case-section"><p class="case-section-label">What influences charging stop selection?</p><div class="case-section-content"><p>Users do not simply look for the nearest charger. Their decision is influenced by a combination of practical and contextual factors.</p><div class="research-bars"><div class="research-bar"><div class="research-bar-top"><span>Fast charging / many outlets</span><strong>80.7%</strong></div><div class="research-bar-track"><div style="width:80.7%"></div></div></div><div class="research-bar"><div class="research-bar-top"><span>Close to route</span><strong>61.4%</strong></div><div class="research-bar-track"><div style="width:61.4%"></div></div></div><div class="research-bar"><div class="research-bar-top"><span>Nearby toilet</span><strong>41.6%</strong></div><div class="research-bar-track"><div style="width:41.6%"></div></div></div><div class="research-bar"><div class="research-bar-top"><span>Food and drinks</span><strong>25.3%</strong></div><div class="research-bar-track"><div style="width:25.3%"></div></div></div></div></div></div>
+      <div class="case-section"><p class="case-section-label">The solution in the Clever app</p><div class="case-section-content"><p>Rather than building a complete navigation platform, we focused on helping users make better charging decisions.</p><img class="case-inline-media" src="assets/cases/route-planning/solution-journey.png" alt="Route planning user journey in the Clever app"><div class="mini-flow"><div class="mini-flow-item"><span class="mini-flow-number">Step 1</span><span class="mini-flow-title">Search destination</span><span class="mini-flow-text">Users search for where they want to go directly in the Clever app.</span></div><div class="mini-flow-item"><span class="mini-flow-number">Step 2</span><span class="mini-flow-title">Review suggestions</span><span class="mini-flow-text">Clever suggests charging stops within 1,000 meters of the route.</span></div><div class="mini-flow-item"><span class="mini-flow-number">Step 3</span><span class="mini-flow-title">Send to navigation</span><span class="mini-flow-text">Users choose preferred stops and transfer the route to their navigation app.</span></div></div><p>Clever suggests relevant charging locations close to the route, prioritising high-speed chargers and locations with many outlets to reduce the risk of waiting.</p><p>This approach allowed us to create value without requiring direct vehicle integration, making the feature available to all Clever customers regardless of vehicle type.</p></div></div>
+      <div class="case-section"><p class="case-section-label">What did I learn?</p><div class="case-section-content"><ul class="case-ul"><li>Impactful solutions do not always require complex technology. Sometimes the most valuable solution is the one that reduces complexity.</li><li>Route planning had been viewed primarily as a technical challenge, but users were not necessarily asking for a complete route planning platform.</li><li>Looking back, I learned that we spent too much time comparing ourselves to specialised route planning tools and too little time focusing on the underlying user need.</li><li>The project also raised an important strategic question: where can Clever create unique value as vehicle software continues to improve?</li></ul></div></div>
 
     </div>
   </div>
 </section>
 
 <div class="case-bottom-media">
-  <div class="media-placeholder">
-    Bottom image placeholder<br>
-    assets/cases/route-planning/bottom-image.png
-  </div>
+  <img class="case-bottom-image" src="assets/cases/route-planning/bottom-image.png" alt="Additional route planning screens from the Clever app">
 </div>
 
 <footer><div class="footer-inner"><span>© 2026 Nicolai Joshua. All rights reserved.</span></div></footer>
