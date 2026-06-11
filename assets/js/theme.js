@@ -3,18 +3,6 @@
   const DARK_THEME_COLOR = '#141414';
   const STORAGE_KEY = 'theme';
 
-  function getThemeColorMeta() {
-    let meta = document.querySelector('meta[name="theme-color"]');
-
-    if (!meta) {
-      meta = document.createElement('meta');
-      meta.setAttribute('name', 'theme-color');
-      document.head.appendChild(meta);
-    }
-
-    return meta;
-  }
-
   function getSavedTheme() {
     try {
       const savedTheme = localStorage.getItem(STORAGE_KEY);
@@ -55,11 +43,44 @@
     return getSavedTheme() || getActiveTheme() || getPreferredTheme();
   }
 
+  function getThemeColor(theme) {
+    return theme === 'dark' ? DARK_THEME_COLOR : LIGHT_THEME_COLOR;
+  }
+
+  function setColorScheme(theme) {
+    document.documentElement.style.colorScheme = theme;
+
+    let meta = document.querySelector('meta[name="color-scheme"]');
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.setAttribute('name', 'color-scheme');
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute('content', theme);
+  }
+
+  function replaceThemeColorMeta(theme) {
+    document.querySelectorAll('meta[name="theme-color"]').forEach(function (meta) {
+      meta.remove();
+    });
+
+    const meta = document.createElement('meta');
+    meta.setAttribute('name', 'theme-color');
+    meta.setAttribute('content', getThemeColor(theme));
+    document.head.appendChild(meta);
+  }
+
   function setThemeColor(theme) {
-    getThemeColorMeta().setAttribute(
-      'content',
-      theme === 'dark' ? DARK_THEME_COLOR : LIGHT_THEME_COLOR
-    );
+    setColorScheme(theme);
+    replaceThemeColorMeta(theme);
+
+    requestAnimationFrame(function () {
+      replaceThemeColorMeta(theme);
+    });
+
+    setTimeout(function () {
+      replaceThemeColorMeta(theme);
+    }, 120);
   }
 
   function setToggleIcon(theme) {
