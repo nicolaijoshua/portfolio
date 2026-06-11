@@ -2,6 +2,7 @@
   const LIGHT_THEME_COLOR = '#f0f2f5';
   const DARK_THEME_COLOR = '#141414';
   const STORAGE_KEY = 'theme';
+  const VIEWPORT_REFRESH_TOKEN = 'interactive-widget=resizes-content';
 
   function getSavedTheme() {
     try {
@@ -49,6 +50,11 @@
 
   function getStatusBarStyle(theme) {
     return theme === 'dark' ? 'black-translucent' : 'default';
+  }
+
+  function isIOS() {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   }
 
   function insertEarly(meta) {
@@ -119,6 +125,28 @@
     }, 120);
   }
 
+  function forceBrowserChromeRefresh() {
+    if (!isIOS()) {
+      return;
+    }
+
+    const viewport = document.querySelector('meta[name="viewport"]');
+    if (!viewport) {
+      return;
+    }
+
+    const originalContent = viewport.getAttribute('content') || '';
+    const nudgedContent = originalContent.includes(VIEWPORT_REFRESH_TOKEN)
+      ? originalContent.replace(', ' + VIEWPORT_REFRESH_TOKEN, '').replace(VIEWPORT_REFRESH_TOKEN, '')
+      : originalContent + ', ' + VIEWPORT_REFRESH_TOKEN;
+
+    viewport.setAttribute('content', nudgedContent);
+
+    requestAnimationFrame(function () {
+      viewport.setAttribute('content', originalContent);
+    });
+  }
+
   function setToggleIcon(theme) {
     const icon = document.getElementById('toggleIcon');
     if (icon) {
@@ -148,6 +176,7 @@
       } catch (error) {
         // Ignore storage failures so the theme toggle still works.
       }
+      forceBrowserChromeRefresh();
     }
   }
 
