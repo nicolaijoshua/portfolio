@@ -122,7 +122,7 @@
   function setToggleIcon(theme) {
     const icon = document.getElementById('toggleIcon');
     if (icon) {
-      icon.textContent = theme === 'dark' ? '\uD83C\uDF19' : '\u2600\uFE0F';
+      icon.textContent = theme === 'dark' ? String.fromCodePoint(0x1F319) : String.fromCodePoint(0x2600, 0xFE0F);
     }
   }
 
