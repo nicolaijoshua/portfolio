@@ -47,46 +47,82 @@
     return theme === 'dark' ? DARK_THEME_COLOR : LIGHT_THEME_COLOR;
   }
 
-  function setColorScheme(theme) {
-    document.documentElement.style.colorScheme = theme;
+  function getStatusBarStyle(theme) {
+    return theme === 'dark' ? 'black-translucent' : 'default';
+  }
 
-    let meta = document.querySelector('meta[name="color-scheme"]');
-    if (!meta) {
-      meta = document.createElement('meta');
-      meta.setAttribute('name', 'color-scheme');
+  function insertEarly(meta) {
+    if (document.currentScript && document.currentScript.parentNode) {
+      document.currentScript.parentNode.insertBefore(meta, document.currentScript.nextSibling);
+    } else if (document.head.firstChild) {
+      document.head.insertBefore(meta, document.head.firstChild);
+    } else {
       document.head.appendChild(meta);
     }
+  }
+
+  function ensureMeta(name, selector) {
+    let meta = document.querySelector(selector || 'meta[name="' + name + '"]');
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.setAttribute('name', name);
+      insertEarly(meta);
+    }
+    return meta;
+  }
+
+  function setColorScheme(theme) {
+    document.documentElement.style.colorScheme = theme;
+    const meta = ensureMeta('color-scheme', 'meta[name="color-scheme"]');
     meta.setAttribute('content', theme);
   }
 
-  function replaceThemeColorMeta(theme) {
-    document.querySelectorAll('meta[name="theme-color"]').forEach(function (meta) {
-      meta.remove();
-    });
+  function setAppleStatusBar(theme) {
+    const meta = ensureMeta('apple-mobile-web-app-status-bar-style', 'meta[name="apple-mobile-web-app-status-bar-style"]');
+    meta.setAttribute('content', getStatusBarStyle(theme));
+  }
 
-    const meta = document.createElement('meta');
-    meta.setAttribute('name', 'theme-color');
-    meta.setAttribute('content', getThemeColor(theme));
-    document.head.appendChild(meta);
+  function getThemeColorMeta() {
+    let meta = document.querySelector('meta[name="theme-color"][data-theme-color-active]');
+    if (meta) {
+      return meta;
+    }
+
+    meta = document.querySelector('meta[name="theme-color"]');
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.setAttribute('name', 'theme-color');
+      insertEarly(meta);
+    }
+
+    meta.setAttribute('data-theme-color-active', '');
+    meta.removeAttribute('media');
+    return meta;
   }
 
   function setThemeColor(theme) {
-    setColorScheme(theme);
-    replaceThemeColorMeta(theme);
+    const color = getThemeColor(theme);
+    const meta = getThemeColorMeta();
+
+    meta.removeAttribute('media');
+    meta.setAttribute('content', color);
+    meta.content = color;
 
     requestAnimationFrame(function () {
-      replaceThemeColorMeta(theme);
+      meta.setAttribute('content', color);
+      meta.content = color;
     });
 
     setTimeout(function () {
-      replaceThemeColorMeta(theme);
+      meta.setAttribute('content', color);
+      meta.content = color;
     }, 120);
   }
 
   function setToggleIcon(theme) {
     const icon = document.getElementById('toggleIcon');
     if (icon) {
-      icon.textContent = theme === 'dark' ? '🌙' : '☀️';
+      icon.textContent = theme === 'dark' ? '\uD83C\uDF19' : '\u2600\uFE0F';
     }
   }
 
@@ -102,6 +138,8 @@
     }
 
     setToggleIcon(theme);
+    setColorScheme(theme);
+    setAppleStatusBar(theme);
     setThemeColor(theme);
 
     if (shouldSave) {
@@ -122,7 +160,7 @@
 
     if (toggle) {
       toggle.addEventListener('click', function () {
-        const nextTheme = document.body.classList.contains('dark') ? 'light' : 'dark';
+        const nextTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
         applyTheme(nextTheme, true);
       });
     }
