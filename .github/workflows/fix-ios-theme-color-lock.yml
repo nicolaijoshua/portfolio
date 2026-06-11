@@ -1,0 +1,224 @@
+name: Fix iOS theme color lock
+
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-ios-theme-color-lock.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Patch theme color handling
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          import re
+
+          html_files = [Path('index.html'), Path('case-intelligent-charging.html'), Path('case-route-planning.html')]
+          for path in html_files:
+              text = path.read_text()
+              text = re.sub(
+                  r'<meta name="viewport" content="([^"]*)">',
+                  lambda m: '<meta name="viewport" content="' + (m.group(1) if 'viewport-fit=cover' in m.group(1) else m.group(1).rstrip() + ', viewport-fit=cover') + '">',
+                  text,
+                  count=1,
+              )
+              text = re.sub(r'^<meta name="theme-color"[^>]*>\n?', '', text, flags=re.M)
+              if '<meta name="color-scheme"' not in text:
+                  text = text.replace('</head>', '<meta name="color-scheme" content="light dark">\n</head>', 1)
+              text = re.sub(
+                  r'<script src="assets/js/theme\.js\?v=[^"]+"></script>',
+                  '<script src="assets/js/theme.js?v=20260611-3"></script>',
+                  text,
+              )
+              path.write_text(text)
+
+          Path('assets/js/theme.js').write_text("""(function () {
+  const LIGHT_THEME_COLOR = '#f0f2f5';
+  const DARK_THEME_COLOR = '#141414';
+  const STORAGE_KEY = 'theme';
+
+  function getSavedTheme() {
+    try {
+      const savedTheme = localStorage.getItem(STORAGE_KEY);
+      return savedTheme === 'dark' || savedTheme === 'light' ? savedTheme : null;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function getActiveTheme() {
+    const body = document.body;
+    const root = document.documentElement;
+
+    if (
+      (body && body.classList.contains('dark')) ||
+      root.classList.contains('dark') ||
+      (body && body.dataset.theme === 'dark') ||
+      root.dataset.theme === 'dark'
+    ) {
+      return 'dark';
+    }
+
+    if (
+      (body && body.dataset.theme === 'light') ||
+      root.dataset.theme === 'light'
+    ) {
+      return 'light';
+    }
+
+    return null;
+  }
+
+  function getPreferredTheme() {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+
+  function getInitialTheme() {
+    return getSavedTheme() || getActiveTheme() || getPreferredTheme();
+  }
+
+  function getThemeColor(theme) {
+    return theme === 'dark' ? DARK_THEME_COLOR : LIGHT_THEME_COLOR;
+  }
+
+  function getStatusBarStyle(theme) {
+    return theme === 'dark' ? 'black-translucent' : 'default';
+  }
+
+  function ensureMeta(name, selector) {
+    let meta = document.querySelector(selector || 'meta[name="' + name + '"]');
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.setAttribute('name', name);
+      if (document.currentScript && document.currentScript.parentNode) {
+        document.currentScript.parentNode.insertBefore(meta, document.currentScript.nextSibling);
+      } else if (document.head.firstChild) {
+        document.head.insertBefore(meta, document.head.firstChild);
+      } else {
+        document.head.appendChild(meta);
+      }
+    }
+    return meta;
+  }
+
+  function setColorScheme(theme) {
+    document.documentElement.style.colorScheme = theme;
+
+    const meta = ensureMeta('color-scheme', 'meta[name="color-scheme"]');
+    meta.setAttribute('content', theme);
+  }
+
+  function setAppleStatusBar(theme) {
+    const meta = ensureMeta('apple-mobile-web-app-status-bar-style', 'meta[name="apple-mobile-web-app-status-bar-style"]');
+    meta.setAttribute('content', getStatusBarStyle(theme));
+  }
+
+  function getThemeColorMeta() {
+    const activeMeta = document.querySelector('meta[name="theme-color"][data-theme-color-active]');
+    if (activeMeta) {
+      return activeMeta;
+    }
+
+    const firstMeta = document.querySelector('meta[name="theme-color"]');
+    if (firstMeta) {
+      firstMeta.setAttribute('data-theme-color-active', '');
+      firstMeta.removeAttribute('media');
+      return firstMeta;
+    }
+
+    const meta = ensureMeta('theme-color', 'meta[name="theme-color"][data-theme-color-active]');
+    meta.setAttribute('data-theme-color-active', '');
+    meta.removeAttribute('media');
+    return meta;
+  }
+
+  function setThemeColor(theme) {
+    const color = getThemeColor(theme);
+    const meta = getThemeColorMeta();
+
+    meta.removeAttribute('media');
+    meta.setAttribute('content', color);
+    meta.content = color;
+
+    requestAnimationFrame(function () {
+      meta.setAttribute('content', color);
+      meta.content = color;
+    });
+
+    setTimeout(function () {
+      meta.setAttribute('content', color);
+      meta.content = color;
+    }, 120);
+  }
+
+  function setToggleIcon(theme) {
+    const icon = document.getElementById('toggleIcon');
+    if (icon) {
+      icon.textContent = theme === 'dark' ? '🌙' : '☀️';
+    }
+  }
+
+  function setRootTheme(theme) {
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+  }
+
+  function applyTheme(theme, shouldSave) {
+    setRootTheme(theme);
+
+    if (document.body) {
+      document.body.classList.toggle('dark', theme === 'dark');
+    }
+
+    setToggleIcon(theme);
+    setColorScheme(theme);
+    setAppleStatusBar(theme);
+    setThemeColor(theme);
+
+    if (shouldSave) {
+      try {
+        localStorage.setItem(STORAGE_KEY, theme);
+      } catch (error) {
+        // Ignore storage failures so the theme toggle still works.
+      }
+    }
+  }
+
+  applyTheme(getInitialTheme(), false);
+
+  function initTheme() {
+    const toggle = document.getElementById('themeToggle');
+
+    applyTheme(getInitialTheme(), false);
+
+    if (toggle) {
+      toggle.addEventListener('click', function () {
+        const nextTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+        applyTheme(nextTheme, true);
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTheme);
+  } else {
+    initTheme();
+  }
+}());
+""")
+          PY
+      - name: Commit patch and remove workflow
+        run: |
+          rm .github/workflows/fix-ios-theme-color-lock.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html case-intelligent-charging.html case-route-planning.html assets/js/theme.js .github/workflows/fix-ios-theme-color-lock.yml
+          git commit -m "Fix iOS Safari theme color lock"
+          git push
