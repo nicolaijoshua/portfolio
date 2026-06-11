@@ -25,18 +25,21 @@
   }
 
   function getActiveTheme() {
+    const body = document.body;
+    const root = document.documentElement;
+
     if (
-      document.body.classList.contains('dark') ||
-      document.documentElement.classList.contains('dark') ||
-      document.body.dataset.theme === 'dark' ||
-      document.documentElement.dataset.theme === 'dark'
+      (body && body.classList.contains('dark')) ||
+      root.classList.contains('dark') ||
+      (body && body.dataset.theme === 'dark') ||
+      root.dataset.theme === 'dark'
     ) {
       return 'dark';
     }
 
     if (
-      document.body.dataset.theme === 'light' ||
-      document.documentElement.dataset.theme === 'light'
+      (body && body.dataset.theme === 'light') ||
+      root.dataset.theme === 'light'
     ) {
       return 'light';
     }
@@ -66,8 +69,17 @@
     }
   }
 
+  function setRootTheme(theme) {
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+  }
+
   function applyTheme(theme, shouldSave) {
-    document.body.classList.toggle('dark', theme === 'dark');
+    setRootTheme(theme);
+
+    if (document.body) {
+      document.body.classList.toggle('dark', theme === 'dark');
+    }
+
     setToggleIcon(theme);
     setThemeColor(theme);
 
@@ -79,6 +91,8 @@
       }
     }
   }
+
+  applyTheme(getInitialTheme(), false);
 
   function initTheme() {
     const toggle = document.getElementById('themeToggle');
