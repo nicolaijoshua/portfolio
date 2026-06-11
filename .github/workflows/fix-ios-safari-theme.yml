@@ -1,0 +1,68 @@
+name: Fix iOS Safari theme color
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-ios-safari-theme.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fix-theme-color:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Move theme initialization before first paint
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+
+          const files = [
+            'index.html',
+            'case-intelligent-charging.html',
+            'case-route-planning.html',
+          ];
+
+          function addHeadScript(html) {
+            if (html.includes('assets/js/theme.js?v=20260611')) return html;
+            return html.replace(
+              '<meta name="theme-color" content="#f0f2f5">',
+              '<meta name="theme-color" content="#f0f2f5">\n<script src="assets/js/theme.js?v=20260611"></script>'
+            );
+          }
+
+          function removeLateThemeScript(html) {
+            return html
+              .replace(/<script src="assets\/js\/theme\.js(?:\?v=20260611)?"><\/script>\n?(?=<\/body>)/g, '')
+              .replace(/<script src="assets\/js\/theme\.js(?:\?v=20260611)?"><\/script>(?=<script>)/g, '');
+          }
+
+          function addEarlyDarkSelectors(html) {
+            return html
+              .replace(/body\.dark nav \{/g, 'body.dark nav,\n  html.dark nav {')
+              .replace(/body\.dark \.hero-photo img \{/g, 'body.dark .hero-photo img,\n  html.dark .hero-photo img {')
+              .replace(/body\.dark \.toggle-thumb \{/g, 'body.dark .toggle-thumb,\n  html.dark .toggle-thumb {')
+              .replace(/body\.dark \.exp-card \{/g, 'body.dark .exp-card,\n  html.dark .exp-card {')
+              .replace(/body\.dark \.case-card:hover \{/g, 'body.dark .case-card:hover,\n  html.dark .case-card:hover {')
+              .replace(/body\.dark \{/g, 'body.dark,\n  html.dark body {');
+          }
+
+          for (const file of files) {
+            let html = fs.readFileSync(file, 'utf8');
+            html = addHeadScript(html);
+            html = removeLateThemeScript(html);
+            html = addEarlyDarkSelectors(html);
+            fs.writeFileSync(file, html);
+          }
+
+          fs.rmSync('.github/workflows/fix-ios-safari-theme.yml', { force: true });
+          NODE
+      - name: Commit fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html case-intelligent-charging.html case-route-planning.html .github/workflows/fix-ios-safari-theme.yml
+          git commit -m "Fix iOS Safari theme color initialization"
+          git push
