@@ -1,9 +1,9 @@
-name: Fix iOS theme color lock
+name: Fix iOS status bar theme
 
 on:
   push:
     paths:
-      - '.github/workflows/fix-ios-theme-color-lock.yml'
+      - .github/workflows/fix-ios-theme-color-lock.yml
 
 permissions:
   contents: write
@@ -13,212 +13,197 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Patch theme color handling
+      - name: Patch HTML heads
         run: |
-          python3 <<'PY'
-          from pathlib import Path
-          import re
+          for f in index.html case-intelligent-charging.html case-route-planning.html; do
+            sed -i 's/content="width=device-width, initial-scale=1.0"/content="width=device-width, initial-scale=1.0, viewport-fit=cover"/' "$f"
+            sed -i '/<meta name="theme-color"/d' "$f"
+            sed -i 's/assets\/js\/theme.js?v=20260611-[0-9]*/assets\/js\/theme.js?v=20260611-3/g' "$f"
+          done
+      - name: Replace shared theme script
+        run: |
+          cat > assets/js/theme.js <<'JS'
+          (function () {
+            const LIGHT_THEME_COLOR = '#f0f2f5';
+            const DARK_THEME_COLOR = '#141414';
+            const STORAGE_KEY = 'theme';
 
-          html_files = [Path('index.html'), Path('case-intelligent-charging.html'), Path('case-route-planning.html')]
-          for path in html_files:
-              text = path.read_text()
-              text = re.sub(
-                  r'<meta name="viewport" content="([^"]*)">',
-                  lambda m: '<meta name="viewport" content="' + (m.group(1) if 'viewport-fit=cover' in m.group(1) else m.group(1).rstrip() + ', viewport-fit=cover') + '">',
-                  text,
-                  count=1,
-              )
-              text = re.sub(r'^<meta name="theme-color"[^>]*>\n?', '', text, flags=re.M)
-              if '<meta name="color-scheme"' not in text:
-                  text = text.replace('</head>', '<meta name="color-scheme" content="light dark">\n</head>', 1)
-              text = re.sub(
-                  r'<script src="assets/js/theme\.js\?v=[^"]+"></script>',
-                  '<script src="assets/js/theme.js?v=20260611-3"></script>',
-                  text,
-              )
-              path.write_text(text)
+            function getSavedTheme() {
+              try {
+                const savedTheme = localStorage.getItem(STORAGE_KEY);
+                return savedTheme === 'dark' || savedTheme === 'light' ? savedTheme : null;
+              } catch (error) {
+                return null;
+              }
+            }
 
-          Path('assets/js/theme.js').write_text("""(function () {
-  const LIGHT_THEME_COLOR = '#f0f2f5';
-  const DARK_THEME_COLOR = '#141414';
-  const STORAGE_KEY = 'theme';
+            function getActiveTheme() {
+              const body = document.body;
+              const root = document.documentElement;
 
-  function getSavedTheme() {
-    try {
-      const savedTheme = localStorage.getItem(STORAGE_KEY);
-      return savedTheme === 'dark' || savedTheme === 'light' ? savedTheme : null;
-    } catch (error) {
-      return null;
-    }
-  }
+              if (
+                (body && body.classList.contains('dark')) ||
+                root.classList.contains('dark') ||
+                (body && body.dataset.theme === 'dark') ||
+                root.dataset.theme === 'dark'
+              ) {
+                return 'dark';
+              }
 
-  function getActiveTheme() {
-    const body = document.body;
-    const root = document.documentElement;
+              if (
+                (body && body.dataset.theme === 'light') ||
+                root.dataset.theme === 'light'
+              ) {
+                return 'light';
+              }
 
-    if (
-      (body && body.classList.contains('dark')) ||
-      root.classList.contains('dark') ||
-      (body && body.dataset.theme === 'dark') ||
-      root.dataset.theme === 'dark'
-    ) {
-      return 'dark';
-    }
+              return null;
+            }
 
-    if (
-      (body && body.dataset.theme === 'light') ||
-      root.dataset.theme === 'light'
-    ) {
-      return 'light';
-    }
+            function getPreferredTheme() {
+              return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
 
-    return null;
-  }
+            function getInitialTheme() {
+              return getSavedTheme() || getActiveTheme() || getPreferredTheme();
+            }
 
-  function getPreferredTheme() {
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  }
+            function getThemeColor(theme) {
+              return theme === 'dark' ? DARK_THEME_COLOR : LIGHT_THEME_COLOR;
+            }
 
-  function getInitialTheme() {
-    return getSavedTheme() || getActiveTheme() || getPreferredTheme();
-  }
+            function getStatusBarStyle(theme) {
+              return theme === 'dark' ? 'black-translucent' : 'default';
+            }
 
-  function getThemeColor(theme) {
-    return theme === 'dark' ? DARK_THEME_COLOR : LIGHT_THEME_COLOR;
-  }
+            function insertEarly(meta) {
+              if (document.currentScript && document.currentScript.parentNode) {
+                document.currentScript.parentNode.insertBefore(meta, document.currentScript.nextSibling);
+              } else if (document.head.firstChild) {
+                document.head.insertBefore(meta, document.head.firstChild);
+              } else {
+                document.head.appendChild(meta);
+              }
+            }
 
-  function getStatusBarStyle(theme) {
-    return theme === 'dark' ? 'black-translucent' : 'default';
-  }
+            function ensureMeta(name, selector) {
+              let meta = document.querySelector(selector || 'meta[name="' + name + '"]');
+              if (!meta) {
+                meta = document.createElement('meta');
+                meta.setAttribute('name', name);
+                insertEarly(meta);
+              }
+              return meta;
+            }
 
-  function ensureMeta(name, selector) {
-    let meta = document.querySelector(selector || 'meta[name="' + name + '"]');
-    if (!meta) {
-      meta = document.createElement('meta');
-      meta.setAttribute('name', name);
-      if (document.currentScript && document.currentScript.parentNode) {
-        document.currentScript.parentNode.insertBefore(meta, document.currentScript.nextSibling);
-      } else if (document.head.firstChild) {
-        document.head.insertBefore(meta, document.head.firstChild);
-      } else {
-        document.head.appendChild(meta);
-      }
-    }
-    return meta;
-  }
+            function setColorScheme(theme) {
+              document.documentElement.style.colorScheme = theme;
+              const meta = ensureMeta('color-scheme', 'meta[name="color-scheme"]');
+              meta.setAttribute('content', theme);
+            }
 
-  function setColorScheme(theme) {
-    document.documentElement.style.colorScheme = theme;
+            function setAppleStatusBar(theme) {
+              const meta = ensureMeta('apple-mobile-web-app-status-bar-style', 'meta[name="apple-mobile-web-app-status-bar-style"]');
+              meta.setAttribute('content', getStatusBarStyle(theme));
+            }
 
-    const meta = ensureMeta('color-scheme', 'meta[name="color-scheme"]');
-    meta.setAttribute('content', theme);
-  }
+            function getThemeColorMeta() {
+              let meta = document.querySelector('meta[name="theme-color"][data-theme-color-active]');
+              if (meta) {
+                return meta;
+              }
 
-  function setAppleStatusBar(theme) {
-    const meta = ensureMeta('apple-mobile-web-app-status-bar-style', 'meta[name="apple-mobile-web-app-status-bar-style"]');
-    meta.setAttribute('content', getStatusBarStyle(theme));
-  }
+              meta = document.querySelector('meta[name="theme-color"]');
+              if (!meta) {
+                meta = document.createElement('meta');
+                meta.setAttribute('name', 'theme-color');
+                insertEarly(meta);
+              }
 
-  function getThemeColorMeta() {
-    const activeMeta = document.querySelector('meta[name="theme-color"][data-theme-color-active]');
-    if (activeMeta) {
-      return activeMeta;
-    }
+              meta.setAttribute('data-theme-color-active', '');
+              meta.removeAttribute('media');
+              return meta;
+            }
 
-    const firstMeta = document.querySelector('meta[name="theme-color"]');
-    if (firstMeta) {
-      firstMeta.setAttribute('data-theme-color-active', '');
-      firstMeta.removeAttribute('media');
-      return firstMeta;
-    }
+            function setThemeColor(theme) {
+              const color = getThemeColor(theme);
+              const meta = getThemeColorMeta();
 
-    const meta = ensureMeta('theme-color', 'meta[name="theme-color"][data-theme-color-active]');
-    meta.setAttribute('data-theme-color-active', '');
-    meta.removeAttribute('media');
-    return meta;
-  }
+              meta.removeAttribute('media');
+              meta.setAttribute('content', color);
+              meta.content = color;
 
-  function setThemeColor(theme) {
-    const color = getThemeColor(theme);
-    const meta = getThemeColorMeta();
+              requestAnimationFrame(function () {
+                meta.setAttribute('content', color);
+                meta.content = color;
+              });
 
-    meta.removeAttribute('media');
-    meta.setAttribute('content', color);
-    meta.content = color;
+              setTimeout(function () {
+                meta.setAttribute('content', color);
+                meta.content = color;
+              }, 120);
+            }
 
-    requestAnimationFrame(function () {
-      meta.setAttribute('content', color);
-      meta.content = color;
-    });
+            function setToggleIcon(theme) {
+              const icon = document.getElementById('toggleIcon');
+              if (icon) {
+                icon.textContent = theme === 'dark' ? '\uD83C\uDF19' : '\u2600\uFE0F';
+              }
+            }
 
-    setTimeout(function () {
-      meta.setAttribute('content', color);
-      meta.content = color;
-    }, 120);
-  }
+            function setRootTheme(theme) {
+              document.documentElement.classList.toggle('dark', theme === 'dark');
+            }
 
-  function setToggleIcon(theme) {
-    const icon = document.getElementById('toggleIcon');
-    if (icon) {
-      icon.textContent = theme === 'dark' ? '🌙' : '☀️';
-    }
-  }
+            function applyTheme(theme, shouldSave) {
+              setRootTheme(theme);
 
-  function setRootTheme(theme) {
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-  }
+              if (document.body) {
+                document.body.classList.toggle('dark', theme === 'dark');
+              }
 
-  function applyTheme(theme, shouldSave) {
-    setRootTheme(theme);
+              setToggleIcon(theme);
+              setColorScheme(theme);
+              setAppleStatusBar(theme);
+              setThemeColor(theme);
 
-    if (document.body) {
-      document.body.classList.toggle('dark', theme === 'dark');
-    }
+              if (shouldSave) {
+                try {
+                  localStorage.setItem(STORAGE_KEY, theme);
+                } catch (error) {
+                  // Ignore storage failures so the theme toggle still works.
+                }
+              }
+            }
 
-    setToggleIcon(theme);
-    setColorScheme(theme);
-    setAppleStatusBar(theme);
-    setThemeColor(theme);
+            applyTheme(getInitialTheme(), false);
 
-    if (shouldSave) {
-      try {
-        localStorage.setItem(STORAGE_KEY, theme);
-      } catch (error) {
-        // Ignore storage failures so the theme toggle still works.
-      }
-    }
-  }
+            function initTheme() {
+              const toggle = document.getElementById('themeToggle');
 
-  applyTheme(getInitialTheme(), false);
+              applyTheme(getInitialTheme(), false);
 
-  function initTheme() {
-    const toggle = document.getElementById('themeToggle');
+              if (toggle) {
+                toggle.addEventListener('click', function () {
+                  const nextTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+                  applyTheme(nextTheme, true);
+                });
+              }
+            }
 
-    applyTheme(getInitialTheme(), false);
-
-    if (toggle) {
-      toggle.addEventListener('click', function () {
-        const nextTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
-        applyTheme(nextTheme, true);
-      });
-    }
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initTheme);
-  } else {
-    initTheme();
-  }
-}());
-""")
-          PY
+            if (document.readyState === 'loading') {
+              document.addEventListener('DOMContentLoaded', initTheme);
+            } else {
+              initTheme();
+            }
+          }());
+          JS
+          sed -i 's/^          //' assets/js/theme.js
       - name: Commit patch and remove workflow
         run: |
           rm .github/workflows/fix-ios-theme-color-lock.yml
           git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html case-intelligent-charging.html case-route-planning.html assets/js/theme.js .github/workflows/fix-ios-theme-color-lock.yml
-          git commit -m "Fix iOS Safari theme color lock"
+          git commit -m "Fix iOS Safari status bar theme switching"
           git push
