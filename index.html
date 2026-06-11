@@ -193,7 +193,7 @@
     width: 100%;
   }
 
-  /* Wrapper that gives hero scroll distance before CV takes over */
+  /* Wrapper that gives hero scroll distance before the content takes over */
   .hero-wrapper {
     position: relative;
     height: 160vh;
@@ -558,6 +558,8 @@
 
   /* ─── CASE STUDIES ─── */
   #case-studies {
+    position: relative;
+    z-index: 10;
     padding: 5rem 0;
   }
 
@@ -748,6 +750,45 @@
 </div>
 
 
+<!-- CASE STUDIES -->
+<section id="case-studies">
+  <div class="container">
+    <h2 class="cases-heading">Selected work</h2>
+    <div class="cases-grid">
+      <!-- Case: Route planning -->
+<a class="case-card" href="case-route-planning.html" aria-label="Read case study: Making route planning accessible for every EV driver">
+  <img class="case-image" src="case-route-planning-hero.png" alt="Clever route planning feature showing suggested charging stops">
+  <div class="case-body">
+    <div class="case-meta">
+      <span class="case-tag">2026</span>
+      <span class="case-tag">Lead UX Designer</span>
+      <span class="case-tag">Clever</span>
+    </div>
+    <h3 class="case-title">Making route planning accessible for every EV driver</h3>
+    <p class="case-teaser">Helping EV drivers discover relevant charging stops without requiring vehicle integration.</p>
+    <span class="case-link" aria-hidden="true">Read case study →</span>
+  </div>
+</a>
+      <!-- Case: Intelligent opladning -->
+      <a class="case-card" href="case-intelligent-charging.html" aria-label="Read case study: Intelligent Charging">
+        <img class="case-image" src="case-intelligent-opladning.jpg" alt="Clever app showing intelligent charging plan on a phone screen">
+        <div class="case-body">
+          <div class="case-meta">
+            <span class="case-tag">2021 – 2025</span>
+            <span class="case-tag">UX Lead</span>
+            <span class="case-tag">Clever</span>
+          </div>
+          <h3 class="case-title">Intelligent Charging</h3>
+          <p class="case-teaser">We set out to make it possible for EV drivers to charge at the times when electricity is cheapest and least CO₂-intensive, without requiring anything from the user in their daily routine.</p>
+          <span class="case-link" aria-hidden="true">Read case study →</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+
 <!-- EXPERIENCE -->
 <section id="experience">
   <div class="container">
@@ -836,45 +877,6 @@
 </section>
 
 
-<!-- CASE STUDIES -->
-<section id="case-studies">
-  <div class="container">
-    <h2 class="cases-heading">Case Studies</h2>
-    <div class="cases-grid">
-      <!-- Case: Route planning -->
-<a class="case-card" href="case-route-planning.html" aria-label="Read case study: Making route planning accessible for every EV driver">
-  <img class="case-image" src="case-route-planning-hero.png" alt="Clever route planning feature showing suggested charging stops">
-  <div class="case-body">
-    <div class="case-meta">
-      <span class="case-tag">2026</span>
-      <span class="case-tag">Lead UX Designer</span>
-      <span class="case-tag">Clever</span>
-    </div>
-    <h3 class="case-title">Making route planning accessible for every EV driver</h3>
-    <p class="case-teaser">Helping EV drivers discover relevant charging stops without requiring vehicle integration.</p>
-    <span class="case-link" aria-hidden="true">Read case study →</span>
-  </div>
-</a>
-      <!-- Case: Intelligent opladning -->
-      <a class="case-card" href="case-intelligent-charging.html" aria-label="Read case study: Intelligent Charging">
-        <img class="case-image" src="case-intelligent-opladning.jpg" alt="Clever app showing intelligent charging plan on a phone screen">
-        <div class="case-body">
-          <div class="case-meta">
-            <span class="case-tag">2021 – 2025</span>
-            <span class="case-tag">UX Lead</span>
-            <span class="case-tag">Clever</span>
-          </div>
-          <h3 class="case-title">Intelligent Charging</h3>
-          <p class="case-teaser">We set out to make it possible for EV drivers to charge at the times when electricity is cheapest and least CO₂-intensive, without requiring anything from the user in their daily routine.</p>
-          <span class="case-link" aria-hidden="true">Read case study →</span>
-        </div>
-      </a>
-
-    </div>
-  </div>
-</section>
-
-
 <!-- HOW I WORK -->
 <section id="how-i-work">
   <div class="container">
@@ -938,17 +940,17 @@
     icon.textContent = document.body.classList.contains('dark') ? '🌙' : '☀️';
   });
 
-  // Fade hero content as experience card scrolls over it
+  // Fade hero content as the first content section scrolls over it
   const heroInner = document.querySelector('.hero-inner');
-  const expSection = document.getElementById('experience');
+  const firstContentSection = document.getElementById('case-studies');
 
   window.addEventListener('scroll', () => {
-    const expTop = expSection.getBoundingClientRect().top;
+    const sectionTop = firstContentSection.getBoundingClientRect().top;
     const windowH = window.innerHeight;
-    // Start fading when exp section enters view, complete when it covers ~60% of screen
+    // Start fading when the first section enters view, complete when it covers ~60% of screen
     const fadeStart = windowH;
     const fadeEnd = windowH * 0.3;
-    const opacity = Math.min(1, Math.max(0, (expTop - fadeEnd) / (fadeStart - fadeEnd)));
+    const opacity = Math.min(1, Math.max(0, (sectionTop - fadeEnd) / (fadeStart - fadeEnd)));
     heroInner.style.opacity = opacity;
   }, { passive: true });
 </script>
