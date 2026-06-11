@@ -1,0 +1,56 @@
+name: Fix iOS root background
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-ios-root-background.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fix-root-background:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ensure html root matches active theme
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const files = ['index.html', 'case-intelligent-charging.html', 'case-route-planning.html'];
+
+          for (const file of files) {
+            let html = fs.readFileSync(file, 'utf8');
+
+            html = html.replaceAll('body.dark,\n  html.dark body {', 'body.dark,\n  html.dark {');
+
+            html = html.replaceAll(
+              'html { scroll-behavior: smooth; }',
+              'html { background: var(--bg); scroll-behavior: smooth; }'
+            );
+
+            html = html.replaceAll(
+              'html { background: var(--bg); scroll-behavior: smooth; }',
+              'html { background: var(--bg); scroll-behavior: smooth; }'
+            );
+
+            if (!html.includes('<meta name="color-scheme" content="light dark">')) {
+              html = html.replace(
+                '<meta name="theme-color" content="#f0f2f5">',
+                '<meta name="theme-color" content="#f0f2f5">\n<meta name="color-scheme" content="light dark">'
+              );
+            }
+
+            fs.writeFileSync(file, html);
+          }
+
+          fs.rmSync('.github/workflows/fix-ios-root-background.yml', { force: true });
+          NODE
+      - name: Commit root background fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html case-intelligent-charging.html case-route-planning.html .github/workflows/fix-ios-root-background.yml
+          git commit -m "Fix iOS Safari root background theme"
+          git push
