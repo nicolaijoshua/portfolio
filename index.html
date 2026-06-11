@@ -582,12 +582,20 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
   .case-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+  }
+
+  .case-card:focus-visible {
+    outline: 2px solid var(--black);
+    outline-offset: 4px;
   }
 
   body.dark .case-card:hover {
@@ -670,7 +678,7 @@
     transition: opacity 0.15s;
   }
 
-  .case-link:hover { opacity: 0.5; }
+  .case-card:hover .case-link { opacity: 0.5; }
 
   /* ─── RESPONSIVE ─── */
   @media (max-width: 800px) {
@@ -834,7 +842,7 @@
     <h2 class="cases-heading">Case Studies</h2>
     <div class="cases-grid">
       <!-- Case: Route planning -->
-<div class="case-card">
+<a class="case-card" href="case-route-planning.html" aria-label="Read case study: Making route planning accessible for every EV driver">
   <img class="case-image" src="case-route-planning-hero.png" alt="Clever route planning feature showing suggested charging stops">
   <div class="case-body">
     <div class="case-meta">
@@ -844,11 +852,11 @@
     </div>
     <h3 class="case-title">Making route planning accessible for every EV driver</h3>
     <p class="case-teaser">Helping EV drivers discover relevant charging stops without requiring vehicle integration.</p>
-    <a class="case-link" href="case-route-planning.html">Read case study →</a>
+    <span class="case-link" aria-hidden="true">Read case study →</span>
   </div>
-</div>
+</a>
       <!-- Case: Intelligent opladning -->
-      <div class="case-card">
+      <a class="case-card" href="case-intelligent-charging.html" aria-label="Read case study: Intelligent Charging">
         <img class="case-image" src="case-intelligent-opladning.jpg" alt="Clever app showing intelligent charging plan on a phone screen">
         <div class="case-body">
           <div class="case-meta">
@@ -858,9 +866,9 @@
           </div>
           <h3 class="case-title">Intelligent Charging</h3>
           <p class="case-teaser">We set out to make it possible for EV drivers to charge at the times when electricity is cheapest and least CO₂-intensive, without requiring anything from the user in their daily routine.</p>
-          <a class="case-link" href="case-intelligent-charging.html">Read case study →</a>
+          <span class="case-link" aria-hidden="true">Read case study →</span>
         </div>
-      </div>
+      </a>
 
     </div>
   </div>
