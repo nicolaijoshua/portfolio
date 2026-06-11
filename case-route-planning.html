@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#f0f2f5">
+<meta name="color-scheme" content="light dark">
 <script src="assets/js/theme.js?v=20260611-2"></script>
 <title>Making route planning accessible for every EV driver — Nicolai Joshua</title>
 <meta name="description" content="Case study: How Clever made route planning accessible for more EV drivers by suggesting relevant charging stops directly in the app.">
@@ -30,7 +31,7 @@
   }
 
   body.dark,
-  html.dark body {
+  html.dark {
     --bg: #141414;
     --white: #141414;
     --black: #f0f0f0;
@@ -48,7 +49,7 @@
   .toggle-thumb { width: 20px; height: 20px; border-radius: 50%; background: var(--black); display: flex; align-items: center; justify-content: center; transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), background 0.2s; font-size: 11px; line-height: 1; }
   body.dark .toggle-thumb,
   html.dark .toggle-thumb { transform: translateX(24px); }
-  html { scroll-behavior: smooth; }
+  html { background: var(--bg); scroll-behavior: smooth; }
   body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--black); -webkit-font-smoothing: antialiased; font-size: 16px; }
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(240, 242, 245, 0.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
   .nav-inner { max-width: var(--max); margin: 0 auto; padding: 0 2.5rem; height: 56px; display: flex; align-items: center; justify-content: space-between; }

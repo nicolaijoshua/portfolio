@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#f0f2f5">
+<meta name="color-scheme" content="light dark">
 <script src="assets/js/theme.js?v=20260611-2"></script>
 <title>Intelligent Charging — Nicolai Joshua</title>
 <meta name="description" content="Case study: How Clever made it possible for EV drivers to charge at the cheapest and least CO₂-intensive times, automatically.">
@@ -26,7 +27,7 @@
   }
 
   body.dark,
-  html.dark body {
+  html.dark {
     --bg: #141414;
     --white: #141414;
     --black: #f0f0f0;
@@ -76,7 +77,7 @@
     transform: translateX(24px);
   }
 
-  html { scroll-behavior: smooth; }
+  html { background: var(--bg); scroll-behavior: smooth; }
 
   body {
     font-family: 'Inter', sans-serif;
