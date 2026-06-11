@@ -2,6 +2,7 @@
   const LIGHT_THEME_COLOR = '#f0f2f5';
   const DARK_THEME_COLOR = '#141414';
   const STORAGE_KEY = 'theme';
+  const SCROLL_RESTORE_KEY = 'themeScrollY';
   const VIEWPORT_REFRESH_TOKEN = 'interactive-widget=resizes-content';
 
   function getSavedTheme() {
@@ -147,6 +148,41 @@
     });
   }
 
+  function reloadIOSAfterThemeChange() {
+    if (!isIOS()) {
+      return;
+    }
+
+    try {
+      sessionStorage.setItem(SCROLL_RESTORE_KEY, String(window.scrollY || document.documentElement.scrollTop || 0));
+    } catch (error) {
+      // Ignore storage failures; the reload is still the important part on iOS Safari.
+    }
+
+    setTimeout(function () {
+      window.location.reload();
+    }, 60);
+  }
+
+  function restoreScrollPosition() {
+    let savedScroll = null;
+
+    try {
+      savedScroll = sessionStorage.getItem(SCROLL_RESTORE_KEY);
+      sessionStorage.removeItem(SCROLL_RESTORE_KEY);
+    } catch (error) {
+      return;
+    }
+
+    if (savedScroll === null) {
+      return;
+    }
+
+    requestAnimationFrame(function () {
+      window.scrollTo(0, Number(savedScroll) || 0);
+    });
+  }
+
   function setToggleIcon(theme) {
     const icon = document.getElementById('toggleIcon');
     if (icon) {
@@ -177,6 +213,7 @@
         // Ignore storage failures so the theme toggle still works.
       }
       forceBrowserChromeRefresh();
+      reloadIOSAfterThemeChange();
     }
   }
 
@@ -186,6 +223,7 @@
     const toggle = document.getElementById('themeToggle');
 
     applyTheme(getInitialTheme(), false);
+    restoreScrollPosition();
 
     if (toggle) {
       toggle.addEventListener('click', function () {
