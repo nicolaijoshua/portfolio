@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#f0f2f5">
+<script src="assets/js/theme.js?v=20260611"></script>
 <title>Making route planning accessible for every EV driver — Nicolai Joshua</title>
 <meta name="description" content="Case study: How Clever made route planning accessible for more EV drivers by suggesting relevant charging stops directly in the app.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,7 +29,8 @@
     --panel-padding: 2rem;
   }
 
-  body.dark {
+  body.dark,
+  html.dark body {
     --bg: #141414;
     --white: #141414;
     --black: #f0f0f0;
@@ -39,11 +41,13 @@
     --body-text: #aaaaaa;
   }
 
-  body.dark nav { background: rgba(20, 20, 20, 0.88); }
+  body.dark nav,
+  html.dark nav { background: rgba(20, 20, 20, 0.88); }
 
   .theme-toggle { background: none; border: 1px solid var(--border); border-radius: 999px; width: 52px; height: 28px; cursor: pointer; position: relative; display: flex; align-items: center; padding: 0 4px; transition: background 0.2s, border-color 0.2s; flex-shrink: 0; }
   .toggle-thumb { width: 20px; height: 20px; border-radius: 50%; background: var(--black); display: flex; align-items: center; justify-content: center; transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), background 0.2s; font-size: 11px; line-height: 1; }
-  body.dark .toggle-thumb { transform: translateX(24px); }
+  body.dark .toggle-thumb,
+  html.dark .toggle-thumb { transform: translateX(24px); }
   html { scroll-behavior: smooth; }
   body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--black); -webkit-font-smoothing: antialiased; font-size: 16px; }
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(240, 242, 245, 0.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
@@ -143,6 +147,5 @@
 
 <div class="case-bottom-media"><img class="case-bottom-image" src="assets/cases/route-planning/bottom-image.png" alt="Additional route planning screens from the Clever app"></div>
 <footer><div class="footer-inner"><span>© 2026 Nicolai Joshua. All rights reserved.</span></div></footer>
-<script src="assets/js/theme.js"></script>
 </body>
 </html>
