@@ -161,10 +161,24 @@
   .mini-flow-number { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; color: var(--gray-mid); text-transform: uppercase; }
   .mini-flow-title { font-size: 0.95rem; font-weight: 500; color: var(--black); line-height: 1.35; }
   .mini-flow-text { font-size: 0.82rem; font-weight: 300; color: var(--body-text); line-height: 1.6; }
-  footer { border-top: 1px solid var(--border); }
-  .footer-inner { max-width: var(--max); margin: 0 auto; padding: 1.5rem 2.5rem; font-size: 0.75rem; color: var(--gray-mid); }
-  @media (max-width: 900px) { .facts-grid { grid-template-columns: repeat(2, 1fr); } .case-section { grid-template-columns: 1fr; gap: 1.25rem; padding: 3rem 0; } .case-section-label { padding-top: 0; } .mini-flow { grid-template-columns: 1fr; } }
-  @media (max-width: 560px) { :root { --panel-padding: 1.35rem; } .container, .nav-inner, .case-cover-wrap, .case-bottom-media { padding-left: 1.25rem; padding-right: 1.25rem; } .nav-title { display: none; } #case-hero { padding: 7rem 0 3rem; } .case-cover-frame { aspect-ratio: 1/1; border-radius: 10px; } .facts-grid { grid-template-columns: 1fr; gap: 1.5rem; padding-bottom: 3rem; } .case-impact { gap: 1.5rem; } }
+  footer {
+    border-top: 1px solid var(--border);
+  }
+  .footer-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 1.5rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer span {
+    font-size: 0.78rem;
+    font-weight: 300;
+    color: var(--gray-mid);
+  }
+  @media (max-width: 900px) { .footer-inner { flex-direction: column; gap: 0.5rem; } .facts-grid { grid-template-columns: repeat(2, 1fr); } .case-section { grid-template-columns: 1fr; gap: 1.25rem; padding: 3rem 0; } .case-section-label { padding-top: 0; } .mini-flow { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { :root { --panel-padding: 1.35rem; } .container, .nav-inner, .case-cover-wrap, .case-bottom-media, .footer-inner { padding-left: 1.25rem; padding-right: 1.25rem; } .nav-title { display: none; } #case-hero { padding: 7rem 0 3rem; } .case-cover-frame { aspect-ratio: 1/1; border-radius: 10px; } .facts-grid { grid-template-columns: 1fr; gap: 1.5rem; padding-bottom: 3rem; } .case-impact { gap: 1.5rem; } }
 </style>
 </head>
 <body>
