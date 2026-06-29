@@ -73,6 +73,10 @@
     --border: #cdd0d5;
     --body-text: #444444;
     --max: 1200px;
+    --content: 760px;
+    --label-width: 180px;
+    --radius: 14px;
+    --panel-padding: 2rem;
   }
 
   body.dark,
@@ -214,7 +218,8 @@
   }
 
   .case-hero-inner {
-    max-width: 720px;
+    max-width: var(--content);
+    margin: 0 auto;
   }
 
   .case-back {
@@ -250,10 +255,10 @@
   }
 
   .case-hero-title {
-    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-size: clamp(2.1rem, 4.4vw, 4rem);
     font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 1.15;
+    letter-spacing: -0.045em;
+    line-height: 1.08;
     color: var(--black);
     margin-bottom: 1.5rem;
   }
@@ -263,13 +268,27 @@
     font-weight: 300;
     line-height: 1.85;
     color: var(--body-text);
-    max-width: 60ch;
+    max-width: 62ch;
   }
 
   /* ─── CASE IMAGE ─── */
-  .case-cover {
+  .case-cover-wrap {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2.5rem;
+  }
+
+  .case-cover-frame {
     width: 100%;
     aspect-ratio: 16/7;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--border);
+  }
+
+  .case-cover {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     display: block;
     background: var(--border);
@@ -291,21 +310,23 @@
 
   /* ─── FACTS ─── */
   #case-facts {
-    padding: 4rem 0;
-    border-bottom: 1px solid var(--border);
+    padding: 4rem 0 3.5rem;
   }
 
   .facts-grid {
+    max-width: 960px;
+    margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
-    max-width: 720px;
+    padding-bottom: 3.5rem;
+    border-bottom: 1px solid var(--border);
   }
 
   .fact-item {
     display: flex;
     flex-direction: column;
-    gap: 0.3rem;
+    gap: 0.35rem;
   }
 
   .fact-label {
@@ -320,20 +341,30 @@
     font-size: 0.9rem;
     font-weight: 400;
     color: var(--black);
-    line-height: 1.4;
+    line-height: 1.45;
   }
 
   /* ─── CASE CONTENT ─── */
   #case-content {
-    padding: 4rem 0 7rem;
+    padding: 0 0 4rem;
   }
 
   .case-content-inner {
-    max-width: 720px;
+    max-width: 960px;
+    margin: 0 auto;
   }
 
   .case-section {
-    margin-bottom: 4rem;
+    display: grid;
+    grid-template-columns: var(--label-width) minmax(0, 1fr);
+    gap: 3.5rem;
+    padding: 3.5rem 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .case-section:first-child {
+    border-top: 0;
+    padding-top: 0;
   }
 
   .case-section-label {
@@ -342,9 +373,11 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--gray-mid);
-    padding-bottom: 0.6rem;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 1.5rem;
+    padding-top: 0.45rem;
+  }
+
+  .case-section-content {
+    max-width: var(--content);
   }
 
   .case-section p {
@@ -364,7 +397,6 @@
     display: flex;
     flex-direction: column;
     gap: 0.85rem;
-    margin-top: 0.5rem;
   }
 
   .case-ul li {
@@ -386,10 +418,13 @@
 
   /* Steps */
   .case-steps {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: var(--panel-padding);
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    margin-top: 0.5rem;
+    gap: 1.25rem;
+    margin: 1rem 0 1.5rem;
   }
 
   .case-step {
@@ -433,11 +468,12 @@
   /* Impact callout */
   .case-impact {
     background: var(--card-bg);
-    border-radius: 12px;
-    padding: 2rem 2.5rem;
+    border-radius: var(--radius);
+    padding: var(--panel-padding);
     display: flex;
     gap: 3rem;
     flex-wrap: wrap;
+    margin-top: 1rem;
   }
 
   .impact-stat {
@@ -487,20 +523,24 @@
   }
 
   /* ─── RESPONSIVE ─── */
-  @media (max-width: 800px) {
-    .nav-title { display: none; }
+  @media (max-width: 900px) {
     .footer-inner { flex-direction: column; gap: 0.5rem; }
+    .facts-grid { grid-template-columns: repeat(2, 1fr); }
+    .case-section { grid-template-columns: 1fr; gap: 1.25rem; padding: 3rem 0; }
+    .case-section-label { padding-top: 0; }
     .case-impact { gap: 1.5rem; }
-    .case-cover {
-      aspect-ratio: 4/3;
-    }
   }
 
   @media (max-width: 560px) {
+    :root { --panel-padding: 1.35rem; }
+    .container, .nav-inner, .case-cover-wrap, .footer-inner { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .nav-title { display: none; }
     #case-hero { padding: 7rem 0 3rem; }
-    .case-cover {
+    .case-cover-frame {
       aspect-ratio: 1/1;
+      border-radius: 10px;
     }
+    .facts-grid { grid-template-columns: 1fr; gap: 1.5rem; padding-bottom: 3rem; }
   }
 </style>
 </head>
@@ -540,7 +580,11 @@
 </section>
 
 <!-- COVER IMAGE -->
-<img class="case-cover" src="case-intelligent-opladning.jpg" alt="Clever app showing intelligent charging plan on a phone screen">
+<div class="case-cover-wrap">
+  <div class="case-cover-frame">
+    <img class="case-cover" src="case-intelligent-opladning.jpg" alt="Clever app showing intelligent charging plan on a phone screen">
+  </div>
+</div>
 
 <!-- FACTS -->
 <section id="case-facts">
@@ -574,79 +618,91 @@
       <!-- Impact -->
       <div class="case-section">
         <p class="case-section-label">Impact</p>
-        <ul class="case-ul">
-          <li>Up to <strong>70% reduction</strong> in CO₂ footprint per charge</li>
-          <li>The <strong>majority</strong> of home charging sessions now happen via intelligent charging</li>
-          <li>The solution actively contributes to <strong>stabilising the electricity grid</strong></li>
-        </ul>
+        <div class="case-section-content">
+          <ul class="case-ul">
+            <li>Up to <strong>70% reduction</strong> in CO₂ footprint per charge</li>
+            <li>The <strong>majority</strong> of home charging sessions now happen via intelligent charging</li>
+            <li>The solution actively contributes to <strong>stabilising the electricity grid</strong></li>
+          </ul>
+        </div>
       </div>
 
       <!-- Context -->
       <div class="case-section">
         <p class="case-section-label">Context and purpose</p>
-        <p>Throughout the day, both electricity prices and CO₂ intensity vary significantly. An electric vehicle can easily double a household's electricity consumption, and the potential for shifting usage to the best times of day is enormous.</p>
-        <p>Our purpose was to give Clever's customers the ability to charge at the best times, for their wallet, for the climate, and for the grid, without making their everyday life more complicated.</p>
+        <div class="case-section-content">
+          <p>Throughout the day, both electricity prices and CO₂ intensity vary significantly. An electric vehicle can easily double a household's electricity consumption, and the potential for shifting usage to the best times of day is enormous.</p>
+          <p>Our purpose was to give Clever's customers the ability to charge at the best times, for their wallet, for the climate, and for the grid, without making their everyday life more complicated.</p>
+        </div>
       </div>
 
       <!-- Problem -->
       <div class="case-section">
         <p class="case-section-label">The problem we solved</p>
-        <p>Even motivated users rarely have the time or overview to actively plan when they charge. It requires knowledge of electricity price fluctuations, CO₂ data, and personal driving patterns, information most people simply do not have access to in a busy day.</p>
-        <p>On top of that, the technological infrastructure in 2021 was not yet mature enough for a fully automated solution. We had a clear vision, but had to build towards it step by step.</p>
+        <div class="case-section-content">
+          <p>Even motivated users rarely have the time or overview to actively plan when they charge. It requires knowledge of electricity price fluctuations, CO₂ data, and personal driving patterns, information most people simply do not have access to in a busy day.</p>
+          <p>On top of that, the technological infrastructure in 2021 was not yet mature enough for a fully automated solution. We had a clear vision, but had to build towards it step by step.</p>
+        </div>
       </div>
 
       <!-- Research -->
       <div class="case-section">
         <p class="case-section-label">Research and insights</p>
-        <p>We conducted qualitative interviews and observations to understand users' charging habits and attitudes, supplemented by quantitative studies to validate our assumptions at scale.</p>
-        <ul class="case-ul">
-          <li>Most users want to do the right thing, but only if it does not come at the cost of convenience or money</li>
-          <li>Users wanted confirmation that their actions actually make a difference</li>
-          <li>Price and CO₂ are closely correlated, but not identical, so the solution needed to weigh both</li>
-          <li>A solution requiring active daily input from the user would have low adoption</li>
-        </ul>
-        <p style="margin-top: 1.25rem;">The central conclusion: automation was not just a feature. It was a prerequisite for the solution to work in practice.</p>
+        <div class="case-section-content">
+          <p>We conducted qualitative interviews and observations to understand users' charging habits and attitudes, supplemented by quantitative studies to validate our assumptions at scale.</p>
+          <ul class="case-ul">
+            <li>Most users want to do the right thing, but only if it does not come at the cost of convenience or money</li>
+            <li>Users wanted confirmation that their actions actually make a difference</li>
+            <li>Price and CO₂ are closely correlated, but not identical, so the solution needed to weigh both</li>
+            <li>A solution requiring active daily input from the user would have low adoption</li>
+          </ul>
+          <p style="margin-top: 1.25rem;">The central conclusion: automation was not just a feature. It was a prerequisite for the solution to work in practice.</p>
+        </div>
       </div>
 
       <!-- Solution -->
       <div class="case-section">
         <p class="case-section-label">The solution in the Clever app</p>
-        <p>The vision was clear from the start, but we built towards it in three steps as the technology matured.</p>
-        <div class="case-steps">
-          <div class="case-step">
-            <span class="case-step-number">Step 1</span>
-            <div class="case-step-body">
-              <span class="case-step-title">Delayed charging</span>
-              <span class="case-step-text">Users could choose to delay charging until the night, when electricity is typically cheaper and less CO₂-intensive.</span>
+        <div class="case-section-content">
+          <p>The vision was clear from the start, but we built towards it in three steps as the technology matured.</p>
+          <div class="case-steps">
+            <div class="case-step">
+              <span class="case-step-number">Step 1</span>
+              <div class="case-step-body">
+                <span class="case-step-title">Delayed charging</span>
+                <span class="case-step-text">Users could choose to delay charging until the night, when electricity is typically cheaper and less CO₂-intensive.</span>
+              </div>
+            </div>
+            <div class="case-step">
+              <span class="case-step-number">Step 2</span>
+              <div class="case-step-body">
+                <span class="case-step-title">Scheduled charging</span>
+                <span class="case-step-text">Users entered their departure time and charging needs in the app. Clever then automatically optimised the timing. This solution proved too complex for many users.</span>
+              </div>
+            </div>
+            <div class="case-step">
+              <span class="case-step-number">Step 3</span>
+              <div class="case-step-body">
+                <span class="case-step-title">Full automation via Enode</span>
+                <span class="case-step-text">Users connect their car through an Enode integration in the app. Clever then takes over completely, optimising continuously without the user having to do anything.</span>
+              </div>
             </div>
           </div>
-          <div class="case-step">
-            <span class="case-step-number">Step 2</span>
-            <div class="case-step-body">
-              <span class="case-step-title">Scheduled charging</span>
-              <span class="case-step-text">Users entered their departure time and charging needs in the app. Clever then automatically optimised the timing. This solution proved too complex for many users.</span>
-            </div>
-          </div>
-          <div class="case-step">
-            <span class="case-step-number">Step 3</span>
-            <div class="case-step-body">
-              <span class="case-step-title">Full automation via Enode</span>
-              <span class="case-step-text">Users connect their car through an Enode integration in the app. Clever then takes over completely, optimising continuously without the user having to do anything.</span>
-            </div>
-          </div>
+          <p style="margin-top: 1.5rem;">My role was to drive user understanding and concept development, and to ensure that throughout the process we stayed true to the research insights. The solution needed to feel invisible and trustworthy, not like a task.</p>
+          <p>Intelligent charging is an area we continue to refine and improve on an ongoing basis.</p>
         </div>
-        <p style="margin-top: 1.5rem;">My role was to drive user understanding and concept development, and to ensure that throughout the process we stayed true to the research insights. The solution needed to feel invisible and trustworthy, not like a task.</p>
-        <p>Intelligent charging is an area we continue to refine and improve on an ongoing basis.</p>
       </div>
 
       <!-- Learnings -->
       <div class="case-section">
         <p class="case-section-label">What did we learn?</p>
-        <ul class="case-ul">
-          <li>A strong vision can hold the direction even when the technology is not ready yet. It requires patience and incremental solutions.</li>
-          <li>Complexity in the interface is an adoption killer. The more we could remove from the user's screen, the better it worked.</li>
-          <li>Users want to do the right thing, but they need it to be made easy for them and to see that it actually makes a difference.</li>
-        </ul>
+        <div class="case-section-content">
+          <ul class="case-ul">
+            <li>A strong vision can hold the direction even when the technology is not ready yet. It requires patience and incremental solutions.</li>
+            <li>Complexity in the interface is an adoption killer. The more we could remove from the user's screen, the better it worked.</li>
+            <li>Users want to do the right thing, but they need it to be made easy for them and to see that it actually makes a difference.</li>
+          </ul>
+        </div>
       </div>
 
     </div>
