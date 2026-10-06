@@ -365,7 +365,18 @@
       grid-template-columns: 1fr;
       gap: 2rem;
     }
+    .hero-text {
+      display: contents;
+    }
+    .hero-label,
+    .hero-heading {
+      margin-bottom: 0;
+    }
+    .hero-body {
+      grid-row: 4;
+    }
     .hero-photo {
+      grid-row: 3;
       position: static;
       aspect-ratio: 4/5;
       max-height: 500px;
