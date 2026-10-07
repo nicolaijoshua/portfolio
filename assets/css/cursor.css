@@ -1,0 +1,29 @@
+/* Keep native cursor behavior on devices without a precise hover pointer. */
+@media (hover: hover) and (pointer: fine) {
+  body {
+    cursor: url("../images/n-cursor.png") 7 4, auto;
+  }
+
+  a[href],
+  button,
+  [role="button"],
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"] {
+    cursor: pointer;
+  }
+
+  input:not([type]),
+  input[type="text"],
+  input[type="email"],
+  input[type="search"],
+  input[type="url"],
+  input[type="tel"],
+  input[type="password"],
+  input[type="number"],
+  textarea,
+  [contenteditable="true"],
+  [contenteditable=""] {
+    cursor: text;
+  }
+}
